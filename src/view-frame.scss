@@ -1,0 +1,19 @@
+.view-intent-frame {
+	height: 100%;
+	width: 100%;
+	flex-flow: row;
+	display: flex;
+	// background-color: rgba(0,0,0,0.5) !important;
+	align-items: center;
+	justify-content: space-around; 
+	align-items: center;
+	box-sizing: border-box;	
+	& > * {
+		transition: 500ms ease-in-out;
+		flex: 0 1 auto;
+		// margin: 30px;
+		max-width: 100%;
+		max-height: 100%;
+		box-sizing: border-box;
+	}
+}

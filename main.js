@@ -4,8 +4,7 @@
 require("./src/main.ts");
 
 // styles -----------------------------
-require("./main.scss");
+require("./main.scss"); 
 
 
-
-console.log("view-intent loaded");
+// console.log("view-intent loaded");

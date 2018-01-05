@@ -1,0 +1,65 @@
+// x ----------------------------
+.x-enter {
+	opacity: 0.01;
+	transform: translateX(20px);
+	// max-width: 0;
+	// max-width: 0;
+}
+.x-enter.x-enter-active {
+	opacity: 1;
+	transform: translateX(0);
+	transition: flex-basis 300ms ease-out, width 300ms ease-out, transform 300ms ease-out, opacity 300ms ease-out, max-width 300ms ease-in;
+}
+.x-leave {
+	opacity: 1;
+	transform: translateX(0);	
+}
+.x-leave.x-leave-active {
+	// position: absolute;
+	opacity: 0.01;
+	transform: translateX(-20px);
+	// max-width: 0;
+	transition: flex-basis 300ms ease-in, width 300ms ease-in, transform 300ms ease-in, opacity 300ms ease-in, max-width 300ms ease-in;
+}
+// x ----------------------------
+.y-enter {
+	opacity: 0.01;
+	transform: translateY(20px);
+}
+.y-enter.y-enter-active {
+	opacity: 1;
+	transform: translateY(0);
+	transition: flex-basis 300ms ease-out, width 300ms ease-out, transform 300ms ease-out, opacity 300ms ease-out, max-width 300ms ease-in;
+}
+.y-leave {
+	opacity: 1;
+	transform: translateY(0);	
+}
+.y-leave.y-leave-active {
+	// position: absolute;
+	opacity: 0.01;
+	transform: translateY(-20px);
+	transition: flex-basis 300ms ease-in, width 300ms ease-in, transform 300ms ease-in, opacity 300ms ease-in, max-width 300ms ease-in;
+}
+// z ----------------------------
+.z-enter {
+	opacity: 0.01;
+	transform: translateZ(200px)  perspective(50em)  ;
+}
+.z-enter.z-enter-active {
+	opacity: 1;
+	transform: translateZ(0) perspective(50em);
+	perspective: 50em;	
+	transition: flex-basis 300ms ease-out, width 300ms ease-out, transform 300ms ease-out, opacity 300ms ease-out, max-width 300ms ease-in;
+}
+.z-leave {
+	opacity: 1;
+	transform: translateZ(0) perspective(50em) ;	
+}
+.z-leave.z-leave-active {
+	// position: absolute;
+	opacity: 0.01;
+	perspective: 50em;
+	transform: translateZ(-200px) perspective(50em);
+	transition: flex-basis 300ms ease-in, width 300ms ease-in, transform 300ms ease-in, opacity 300ms ease-in, max-width 300ms ease-in;
+}

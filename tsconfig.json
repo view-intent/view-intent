@@ -1,34 +1,56 @@
 {
 	"compilerOptions": {
-		"outDir": "./dist/js/",
+		"outDir": "./lib/",
+		"declaration": true,
+		"declarationDir": "./@types",
 		"sourceMap": true,
 		"noImplicitAny": true,
 		"module": "es2015",
 		"target": "es5",
-    	"moduleResolution": "node",
+		"moduleResolution": "node",
 		"skipLibCheck": true,
 		"jsx": "react",
-		"allowJs": true,
+		"jsxFactory": "React.createElement",
+		"allowJs": false,
 		"allowSyntheticDefaultImports": true,
+		"emitDecoratorMetadata": true,
 		"experimentalDecorators": true,
+		"noEmit": false,
+		
 		"lib": [
+			"es5",
+			"es6",
+			"es7",
+			"esnext",
+			"esnext.asynciterable",
 			"es2015",
 			"es2015.core",
 			"es2015.promise",
+			"es2015.collection",
 			"es2015.symbol.wellknown",
 			"es2016",
 			"es2016.array.include",
+			"es2017",
+			"es2017.object",
+			"es2017.sharedmemory",
 			"dom",
 			"dom.iterable",
-			"webworker",
-			"es5",
-			"es6"
+			"webworker"
 		],
 		"types": [
-			"vue-typescript-import-dts"
+			"@types/window-or-global",
+			"@types/node",
+			"@types/react",
+			"@types/react-dom",
+			"@types/jsx-chai",
+			"@types/jquery",
+			"@types/lodash"
 		]
 	},
-	"compileOnSave": false,
+	"compileOnSave": true,
+	"files": [
+		"./src/main.ts"
+	],
 	"exclude": [
 		"node_modules",
 		"node_modules/*",
@@ -39,6 +61,7 @@
 		"tsdist"
 	],
 	"include": [
-		"src/**/*"
+		"src/**/*.tsx",
+		"src/**/*.ts"
 	]
 }

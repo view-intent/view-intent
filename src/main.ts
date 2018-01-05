@@ -1,89 +1,69 @@
+import { IGlobalState, IIntent, IState } from "./main-types";
+import { View } from "./view";
+import { ViewIntentState, ViewState } from "./view-intent-state";
+import { ViewTypeStore } from "./view-type-store";
+export { View } from "./view";
+export { ViewFrame } from "./view-frame";
+import * as mobx from "mobx";
+import { Nav } from "./nav";
+import { Helper } from "./helper";
+import { ViewNotFound } from "./view-error";
+import { StateStoreStore } from "./state-store";
 
-import Vue, { ComponentOptions } from 'vue';
-// import Component from 'vue-class-component';
-// -------- 
+mobx.extras.isolateGlobalState();
 
-
-// import Vue from "vue";
-
-// declare const Vue : any;
-// import * as Holder_ from  "./src/holder";
-import { default as Holder } from "./core/holder";
-import { default as View } from "./core/view";
-import { default as Adapter } from "./core/adapter"; 
-
-// import { default as Adapter } from "./src/adapter";
-
-export module ViewIntent {
-	export var holder = Holder;
-	export var View : View.Adapter = View;
-	// export var creator : string = "created";
-	export interface Options {
-		
+export namespace ViewIntent {
+	export const globaStateInstance: any = null;
+	export function request(url: string, intent: IIntent | string = null, viewState: any = null): void {
+		const newIntent = Helper.pathToIntent(intent, viewState);
+		if (newIntent !== null) {
+			Nav.intentViewAndRequest(url, newIntent);
+		}
 	}
-	export function init(options?: Options) {
-		Holder.init();
-		// View.init();
+	export function post(url: string, data: any, intent: IIntent | string = null, viewState: any = null): void {
+		const newIntent = Helper.pathToIntent(intent, viewState);
+		if (newIntent !== null) {
+			Nav.intentViewAndPost(url, data, newIntent);
+		}
 	}
-	init();
-} 
+	// intent with string must be: areaName.ClassName:{id|"new"|"last"}
+	export function intentView(intent: IIntent | string, viewState: any = null): void {
+		const newIntent: IIntent = Helper.pathToIntent(intent, viewState);
+		if (newIntent != null) {
+			Nav.intentView(newIntent, null);
+		}
+	}
+	export function setGlobalState(globalState: IGlobalState): void {
+		if (this.globaStateInstance === null) {
+			throw new Error("globaState wasn't registered.");
+		} else {
+			for (const stateName in globalState) {
+				if (globalState.hasOwnProperty(stateName)) {
+					const state: IState = globalState[stateName];
+					for (const actionName in state) {
+						if (state.hasOwnProperty(actionName)) {
+							const actionValue = state[actionName];
+							const action: (actionValue: any) => void = globaStateInstance[stateName][actionName];
+							action(actionValue);
+						}
+					}
+				}
+			}
+		}
+	}
+	export function registerViewType(areaName: string, viewType: View.IViewConstructor, frameId: string = "root", require: string[] = []) {
+		ViewTypeStore.registerViewType(areaName, viewType, frameId, require);
+	}
+	export function init(intent: IIntent, globalStates: IGlobalState): void {
+		Nav.start(intent);
+	}
+	// --------------------------------------------------
+	// states -------------------------------------------
+	export function registerStore<TStoreType>(storeName: string, store: TStoreType): void {
+		StateStoreStore.registerStore(storeName, store);
+	}
+}
 
+ViewIntent.registerViewType("default", ViewNotFound);
 
-
-// export default ViewIntent; 
-
-
-
-// testing 
-// @Component
-// class MyComp extends Vue {
-// 	beforeRouteEnter() {
-// 		console.log('beforeRouteEnter')
-// 	}
-// 	beforeRouteLeave() {
-// 		console.log('beforeRouteLeave')
-// 	}
-// }
-
-
-
-// interface MyComponent extends Vue {
-// 	message: string
-// 	onClick(): void
-// }
-// export default {
-// 	template: '<button @click="onClick">Click!</button>',
-// 	data: function () {
-// 		return {
-// 			message: 'Hello!'
-// 		}
-// 	},
-// 	methods: {
-// 		onClick: function () {
-// 			window.alert(this.message)
-// 		}
-// 	}
-// } as ComponentOptions<MyComponent>
-
-
-// function f() {
-// 	console.log("f(): evaluated");
-// 	return function (target: any, propertyKey: string, descriptor: PropertyDescriptor) {
-// 		console.log(target);
-// 		console.log("f(): called");
-// 	}
-// }
-
-// function g() {
-// 	console.log("g(): evaluated");
-// 	return function (target: any, propertyKey: string, descriptor: PropertyDescriptor) {
-// 		console.log(target);
-// 		console.log("g(): called");
-// 	}
-// }
-
-// class C {
-// 	@f()
-// 	@g()
-// 	method() { }
-// }
+export default ViewIntent;
