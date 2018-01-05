@@ -13,12 +13,12 @@ export namespace ViewTypeStore {
 	}
 	const store: { [storeName: string]: IViewTypeInfo } = {};
 
-	export function registerViewType(areaName: string, viewType: View.IViewConstructor, frameId: string, require: string[] = []) {
-		const storeName = Helper.getStoreName(areaName, viewType.name);
+	export function registerViewType(areaName: string, typeName: string, viewType: View.IViewConstructor, frameId: string, require: string[] = []) {
+		const storeName = Helper.getStoreName(areaName, typeName);
 		store[storeName] = {
 			storeName,
 			areaName,
-			typeName: viewType.name,
+			typeName,
 			viewType,
 			frameId,
 			require,

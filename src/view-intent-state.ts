@@ -1,12 +1,14 @@
 import lodash from "lodash";
 import { action, computed, extendShallowObservable, observable } from "mobx";
-import { observer } from "mobx-react";
+// import { observer } from "mobx-react";
 import { process } from "uniqid";
 import { IIntent, IState, IStates } from "./main-types";
 import { View } from "./view";
 import { ViewTypeStore } from "./view-type-store";
-import { setImmediate } from "timers";
+// import { setImmediate } from "timers";
 import { Helper } from "./helper";
+// declare module lodash;
+// const lodash: any = require("lodash");
 
 export class ViewState {
 	public areaName: string;
@@ -70,7 +72,7 @@ export class ViewIntentState {
 		} else {
 			throw new Error(`The arguments "AreaName" and "ViewType" must be passed.`);
 		}
-		return lodash.findLast(this.viewStateList, (viewState) => {
+		return lodash.findLast(this.viewStateList, (viewState: ViewState) => {
 			return viewState.viewType.toLowerCase() === viewType && viewState.areaName.toLowerCase() === areaName;
 		});
 	}
@@ -125,7 +127,6 @@ export class ViewIntentState {
 						const viewType: string = viewTypePath.split(".")[1];
 						const viewTypeConstructor = ViewTypeStore.getViewType(areaName, viewType);
 						if (viewTypeConstructor !== undefined && viewTypeConstructor !== null) {
-							// const viewTypeName: string = viewTypeConstructor.name.toLocaleLowerCase();
 							const newIntent: IIntent = {
 								instanceId: "last",
 								areaName,
@@ -145,7 +146,7 @@ export class ViewIntentState {
 		this.visibleViewIdList = newVisible;
 	}
 	@action public newViewInstance(intent: IIntent): ViewState {
-		// intent.instanceId = 
+		// intent.instanceId =
 
 		this.viewStateList.push(new ViewState(intent));
 		const index: number = this.viewStateList.length - 1;

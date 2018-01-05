@@ -8,7 +8,7 @@ export declare namespace ViewTypeStore {
         frameId: string;
         require: string[];
     }
-    function registerViewType(areaName: string, viewType: View.IViewConstructor, frameId: string, require?: string[]): void;
+    function registerViewType(areaName: string, typeName: string, viewType: View.IViewConstructor, frameId: string, require?: string[]): void;
     function getViewTypeByStoreName(storeName: string): View.IViewConstructor;
     function getViewType(areaName: string, typeName: string): View.IViewConstructor;
     function getViewTypeInfo(areaName: string, typeName: string): IViewTypeInfo;

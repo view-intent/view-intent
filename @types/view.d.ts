@@ -3,6 +3,9 @@ import * as React from "react";
 import { IIntent } from "./main-types";
 export declare abstract class View<TProps extends View.IProps<TStore>, TState extends View.IState, TStore> extends React.Component<TProps, TState> implements View.IView<TProps, TState, TStore> {
     abstract state: TState;
+    observables: {
+        [typeName: string]: any;
+    };
     constructor(props: TProps);
     inject(state: any): void;
     componentDidMount(): void;

@@ -17,8 +17,8 @@ export namespace Nav {
 				["request", "state"],
 			],
 			onSuccess: (response) => {
-				console.log(response.data);
-				// Nav.intentView(response.data.intent, response.urlRedirected);
+				// console.log(response.data);
+				Nav.intentView(response.data.intent, response.urlRedirected);
 			},
 			onAbort: (request) => {
 				console.warn("aborted request", request);
@@ -39,10 +39,14 @@ export namespace Nav {
 				["request", "state"],
 			],
 			onSuccess: (response) => {
-				console.log("sucess -----");
+				Nav.intentView(response.data.intent, response.urlRedirected);
+				// console.log("sucess -----");
 			},
 			onAbort: (request) => {
-				console.log("error -----");
+				console.warn("aborted request", request);
+			},
+			onError: (response) => {
+				console.error("error request", response);
 			},
 		});
 	}
@@ -59,6 +63,9 @@ export namespace Nav {
 	}
 
 	export function intentView(intent: IIntent, url: string, title: string = null): void {
+		if (intent === undefined || intent === null) {
+			return;
+		}
 		let instanceId: string = intent.instanceId;
 		if (instanceId === null || instanceId === undefined) {
 			instanceId = process();

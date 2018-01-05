@@ -9,8 +9,10 @@ export namespace Helper {
 			return false;
 		}
 	}
-
+	const dashRegExp = new RegExp("-", "g");
 	export function getStoreName(areaName: string, typeName: string): string {
+		areaName = areaName.replace(dashRegExp, "");
+		typeName = typeName.replace(dashRegExp, "");
 		return (areaName + "." + typeName).toLowerCase();
 	}
 	export function pathToIntent(intent: IIntent | string | null, viewState: any = null): IIntent {
@@ -50,6 +52,9 @@ export namespace Helper {
 			if (viewState !== null && viewState !== undefined) {
 				newIntent.viewState = viewState;
 			}
+			// if (newIntent.instanceId === null || newIntent.instanceId === undefined) {
+			// 	newIntent.instanceId = "last";
+			// }
 		}
 		return newIntent;
 	}

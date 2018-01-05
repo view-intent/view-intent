@@ -1,4 +1,4 @@
-import { observer } from "mobx-react";
+// import { observer } from "mobx-react";
 import * as React from "react";
 import ReactCSSTransitionGroup from "react-addons-css-transition-group";
 import * as ReactDOM from "react-dom";
@@ -7,13 +7,15 @@ import { ViewIntentState } from "./view-intent-state";
 import { ViewTypeStore } from "./view-type-store";
 import "./view-frame.scss";
 import "./view-frame-transitions.scss";
+import { observe } from "mobx";
 
-@observer
+// @observer
 export class ViewFrame extends React.Component<ViewFrame.IProps, ViewFrame.IState> {
 	public state: ViewFrame.IState = {
 		isRoot: this.props.root,
 		id: this.props.id,
 	};
+	private unobserve: () => void = null;
 	constructor(props: ViewFrame.IProps) {
 		super(props);
 		if (this.state.isRoot === true) {
@@ -28,6 +30,16 @@ export class ViewFrame extends React.Component<ViewFrame.IProps, ViewFrame.IStat
 		if (ViewFrame.rootDefined === false) {
 			throw new Error(`The root "ViewFrame" wasn't defined.`);
 		}
+	}
+	public componentWillMount() {
+		this.unobserve = observe(ViewIntentState.Instance, (change) => {
+			if (change.oldValue !== change.newValue) {
+				this.forceUpdate();
+			}
+		});
+	}
+	public componentWillUnmount() {
+		this.unobserve();
 	}
 	public renderViewList(): JSX.Element[] {
 		return ViewIntentState.Instance.getViewStateListByFrameId(this.state.id).map((viewState, index) => {

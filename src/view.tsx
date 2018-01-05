@@ -5,6 +5,7 @@ import { ViewIntentState } from "./view-intent-state";
 
 export abstract class View<TProps extends View.IProps<TStore>, TState extends View.IState, TStore> extends React.Component<TProps, TState> implements View.IView<TProps, TState, TStore>  {
 	public abstract state: TState;
+	public observables: { [typeName: string]: any } = [];
 	public constructor(props: TProps) {
 		super(props);
 	}
