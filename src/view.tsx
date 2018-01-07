@@ -18,15 +18,15 @@ export abstract class View<TProps extends View.IProps<TStore>, TState extends Vi
 	public bindStore(instance: any) {
 		this.mobxInstances.push(instance);
 	}
-	public inject(state: any): void {
-		this.setState(state);
-	}
+	// public inject(state: any): void {
+	// 	this.setState(state);
+	// }
 	public componentWillMount(): void {
 		const self = this;
 		this.mobxInstances.forEach((instance) => {
 			this.mobxUnregiters.push(observe(instance, (change) => {
 				if (!equal(change.oldValue, change.newValue)) {
-					self.forceUpdate();
+					this.forceUpdate();
 				}
 			}));
 		});

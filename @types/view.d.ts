@@ -7,7 +7,6 @@ export declare abstract class View<TProps extends View.IProps<TStore>, TState ex
     private mobxUnregiters;
     constructor(props: TProps);
     bindStore(instance: any): void;
-    inject(state: any): void;
     componentWillMount(): void;
     componentWillUnmount(): void;
     abstract render(): JSX.Element;
