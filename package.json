@@ -1,6 +1,6 @@
 {
 	"name": "view-intent",
-	"version": "0.11.7",
+	"version": "0.11.8",
 	"description": "",
 	"main": "src/main",
 	"types": "@types/main",
