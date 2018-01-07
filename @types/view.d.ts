@@ -3,12 +3,12 @@ import * as React from "react";
 import { IIntent } from "./main-types";
 export declare abstract class View<TProps extends View.IProps<TStore>, TState extends View.IState, TStore> extends React.Component<TProps, TState> implements View.IView<TProps, TState, TStore> {
     abstract state: TState;
-    observables: {
-        [typeName: string]: any;
-    };
+    private mobxInstances;
+    private mobxUnregiters;
     constructor(props: TProps);
+    bindStore(instance: any): void;
     inject(state: any): void;
-    componentDidMount(): void;
+    componentWillMount(): void;
     componentWillUnmount(): void;
     abstract render(): JSX.Element;
 }
@@ -21,7 +21,6 @@ export declare namespace View {
         visible?: boolean;
     }
     interface IView<TProps extends IProps<TStore>, TState extends IState, TStore> {
-        inject: (newState: TState) => void;
     }
     interface IViewConstructor {
         require?: () => IIntent[];
