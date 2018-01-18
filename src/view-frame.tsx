@@ -5,8 +5,8 @@ import * as ReactDOM from "react-dom";
 import { View } from "./view";
 import { ViewIntentState } from "./view-intent-state";
 import { ViewTypeStore } from "./view-type-store";
-import "./view-frame.scss";
-import "./view-frame-transitions.scss";
+// import "./view-frame.scss";
+// import "./view-frame-transitions.scss";
 import { observe } from "mobx";
 
 // @observer
@@ -33,9 +33,9 @@ export class ViewFrame extends React.Component<ViewFrame.IProps, ViewFrame.IStat
 	}
 	public componentWillMount() {
 		this.unobserve = observe(ViewIntentState.Instance, (change) => {
-			if (change.oldValue !== change.newValue) {
-				this.forceUpdate();
-			}
+			this.forceUpdate();
+			// if (change.oldValue !== change.newValue) {
+			// }
 		});
 	}
 	public componentWillUnmount() {
@@ -64,6 +64,7 @@ export class ViewFrame extends React.Component<ViewFrame.IProps, ViewFrame.IStat
 				transitionLeave={false}
 				transitionEnter={true}
 				component="div"
+				id={this.props.id}
 				className={(this.props.className !== undefined && this.props.className !== null) ? "view-intent-frame " + this.props.className : "view-intent-frame"}
 				transitionEnterTimeout={300}
 				transitionLeaveTimeout={300}

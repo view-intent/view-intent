@@ -1,4 +1,5 @@
-import { IGlobalState, IIntent, IState } from "./main-types";
+import { IGlobalState, IIntent, IState, IViewInfo } from "./main-types";
+export { IViewInfo } from "./main-types";
 import { View } from "./view";
 import { ViewIntentState, ViewState } from "./view-intent-state";
 import { ViewTypeStore } from "./view-type-store";
@@ -9,6 +10,7 @@ import { Nav } from "./nav";
 import { Helper } from "./helper";
 import { ViewNotFound } from "./view-error";
 import { StateStoreStore } from "./state-store-store";
+import { ViewRoot } from "./view-root";
 
 mobx.extras.isolateGlobalState();
 
@@ -51,10 +53,14 @@ export namespace ViewIntent {
 			}
 		}
 	}
-	export function registerViewType(areaName: string, typeName: string, viewType: View.IViewConstructor, frameId: string = "root", require: string[] = []) {
-		ViewTypeStore.registerViewType(areaName, typeName, viewType, frameId, require);
+	// export function registerViewType(areaName: string, typeName: string, viewType: View.IViewConstructor, frameId: string = "root", require: string[] = []) {
+	// 	ViewTypeStore.registerViewType(areaName, typeName, viewType, frameId, require);
+	// }
+	export function registerViewType(viewInfo: IViewInfo) {
+		ViewTypeStore.registerViewType(viewInfo);
 	}
-	export function init(intent: IIntent, globalStates: IGlobalState): void {
+	export function init(intent: IIntent, element: string | HTMLElement): void {
+		ViewRoot.htmlInit(intent, element);
 		Nav.start(intent);
 	}
 	// --------------------------------------------------
@@ -64,6 +70,6 @@ export namespace ViewIntent {
 	}
 }
 
-ViewIntent.registerViewType("default", "ViewNotFound", ViewNotFound);
+ViewIntent.registerViewType(ViewNotFound.viewInfo);
 
 export default ViewIntent;

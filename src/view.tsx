@@ -1,15 +1,19 @@
 import * as React from "react";
 import * as ReactDOM from "react-dom";
 import { observe, IObjectChange } from "mobx";
-import { IIntent } from "./main-types";
+import { IIntent, IViewInfo } from "./main-types";
 import { ViewIntentState } from "./view-intent-state";
 
 const equal: (value1: any, value2: any) => boolean = require("deep-equal");
 
 // observe( (change)=>{  });
 
-export abstract class View<TProps extends View.IProps<TStore>, TState extends View.IState, TStore> extends React.Component<TProps, TState> implements View.IView<TProps, TState, TStore>  {
+export abstract class View<TProps extends View.IProps, TState extends View.IState> extends React.Component<TProps, TState> implements View.IView<TProps, TState>  {
+	public abstract viewInfo: IViewInfo;
 	public abstract state: TState;
+	public get viewClassName() {
+		return this.viewInfo.area.toLowerCase() + "-" + this.viewInfo.name.toLowerCase();
+	}
 	private mobxInstances: Array<(change: IObjectChange) => void> = [];
 	private mobxUnregiters: Array<() => void> = [];
 	public constructor(props: TProps) {
@@ -41,18 +45,18 @@ export abstract class View<TProps extends View.IProps<TStore>, TState extends Vi
 export namespace View {
 	export interface IState {
 	}
-	export interface IProps<TStore> {
-		store?: TStore;
+	export interface IProps {
+		// store?: TStore;
 		instanceId?: string;
 		visible?: boolean;
 	}
-	export interface IView<TProps extends IProps<TStore>, TState extends IState, TStore> {
+	export interface IView<TProps extends IProps, TState extends IState> {
 
 	}
 	export interface IViewConstructor {
 		require?: () => IIntent[];
 		// new(props: any): View<any, any, any>;
-		new(...args: any[]): View<any, any, any>;
+		new(...args: any[]): View<any, any>;
 	}
 	export interface IViewMeasures {
 		mobile?: IViewMeasure;

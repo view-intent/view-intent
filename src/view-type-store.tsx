@@ -1,4 +1,4 @@
-import { IIntent } from "./main-types";
+import { IIntent, IViewInfo } from "./main-types";
 import View from "./view";
 import { Helper } from "./helper";
 
@@ -13,17 +13,30 @@ export namespace ViewTypeStore {
 	}
 	const store: { [storeName: string]: IViewTypeInfo } = {};
 
-	export function registerViewType(areaName: string, typeName: string, viewType: View.IViewConstructor, frameId: string, require: string[] = []) {
-		const storeName = Helper.getStoreName(areaName, typeName);
+	export function registerViewType(viewInfo: IViewInfo) {
+		// console.log(viewInfo);
+		const storeName = Helper.getStoreName(viewInfo.area, viewInfo.name);
 		store[storeName] = {
 			storeName,
-			areaName,
-			typeName,
-			viewType,
-			frameId,
-			require,
+			areaName: viewInfo.area,
+			typeName: viewInfo.name,
+			viewType: viewInfo.type,
+			frameId: viewInfo.frameId || "root",
+			require: viewInfo.require || [],
 		};
 	}
+
+	// export function registerViewType(areaName: string, typeName: string, viewType: View.IViewConstructor, frameId: string, require: string[] = []) {
+	// 	const storeName = Helper.getStoreName(areaName, typeName);
+	// 	store[storeName] = {
+	// 		storeName,
+	// 		areaName,
+	// 		typeName,
+	// 		viewType,
+	// 		frameId,
+	// 		require,
+	// 	};
+	// }
 	export function getViewTypeByStoreName(storeName: string): View.IViewConstructor {
 		if (storeName.indexOf(".") > -1) {
 			return store[storeName.toLowerCase()].viewType;

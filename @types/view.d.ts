@@ -1,8 +1,10 @@
 /// <reference types="@types/react" />
 import * as React from "react";
-import { IIntent } from "./main-types";
-export declare abstract class View<TProps extends View.IProps<TStore>, TState extends View.IState, TStore> extends React.Component<TProps, TState> implements View.IView<TProps, TState, TStore> {
+import { IIntent, IViewInfo } from "./main-types";
+export declare abstract class View<TProps extends View.IProps, TState extends View.IState> extends React.Component<TProps, TState> implements View.IView<TProps, TState> {
+    abstract viewInfo: IViewInfo;
     abstract state: TState;
+    readonly viewClassName: string;
     private mobxInstances;
     private mobxUnregiters;
     constructor(props: TProps);
@@ -14,16 +16,15 @@ export declare abstract class View<TProps extends View.IProps<TStore>, TState ex
 export declare namespace View {
     interface IState {
     }
-    interface IProps<TStore> {
-        store?: TStore;
+    interface IProps {
         instanceId?: string;
         visible?: boolean;
     }
-    interface IView<TProps extends IProps<TStore>, TState extends IState, TStore> {
+    interface IView<TProps extends IProps, TState extends IState> {
     }
     interface IViewConstructor {
         require?: () => IIntent[];
-        new (...args: any[]): View<any, any, any>;
+        new (...args: any[]): View<any, any>;
     }
     interface IViewMeasures {
         mobile?: IViewMeasure;

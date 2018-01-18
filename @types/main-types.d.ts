@@ -24,3 +24,10 @@ export interface INavState {
     title?: string;
     viewState?: any | null;
 }
+export interface IViewInfo {
+    area: string;
+    name: string;
+    type: any;
+    frameId?: string | "root";
+    require?: string[] | undefined;
+}

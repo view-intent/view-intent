@@ -1,7 +1,5 @@
 /// <reference types="@types/react" />
 import * as React from "react";
-import "./view-frame.scss";
-import "./view-frame-transitions.scss";
 export declare class ViewFrame extends React.Component<ViewFrame.IProps, ViewFrame.IState> {
     state: ViewFrame.IState;
     private unobserve;
