@@ -1,15 +1,13 @@
-import { IGlobalState, IIntent, IViewInfo } from "./main-types";
-export { IViewInfo } from "./main-types";
+import { IIntent, IViewInfo } from "./types";
+import { DataFetch } from "./data-fetch";
 export { View } from "./view";
 export { ViewFrame } from "./view-frame";
 export declare namespace ViewIntent {
-    const globaStateInstance: any;
-    function request(url: string, intent?: IIntent | string, viewState?: any): void;
-    function post(url: string, data: any, intent?: IIntent | string, viewState?: any): void;
-    function intentView(intent: IIntent | string, viewState?: any): void;
-    function setGlobalState(globalState: IGlobalState): void;
+    const Fetch: typeof DataFetch;
+    function intentView(intent: IIntent, viewState: any): void;
+    function intentView(intentUrl: string, viewState: any): void;
     function registerViewType(viewInfo: IViewInfo): void;
-    function init(intent: IIntent, element: string | HTMLElement): void;
-    function registerStore<TStoreType>(storeName: string, store: TStoreType): void;
+    function init(element: string | HTMLElement): void;
+    function registerStateRoot(stateName: string, stateRootInstance: any): void;
 }
 export default ViewIntent;

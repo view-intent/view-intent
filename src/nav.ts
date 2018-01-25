@@ -2,66 +2,34 @@ import { AjaxWorker } from "ajax-worker";
 import * as lodash from "lodash";
 import { process, time } from "uniqid";
 import { Is, Url } from "utility-collection";
-import { IIntent, INavState } from "./main-types";
+import { IIntent, INavState, IUrlDataIntent } from "./types";
 import { ViewIntentState } from "./view-intent-state";
+import { Helper } from "./helper";
 
 export namespace Nav {
 	const self = Nav;
-	export function intentViewAndRequest(url: string, intent: IIntent = null): void {
-		if (intent !== null) {
-			self.intentView(intent, url);
-		}
-		AjaxWorker.fetch<{ intent: IIntent; state: any; }>({
-			url,
-			headers: [
-				["request", "state"],
-			],
-			onSuccess: (response) => {
-				// console.log(response.data);
-				Nav.intentView(response.data.intent, response.urlRedirected);
-			},
-			onAbort: (request) => {
-				console.warn("aborted request", request);
-			},
-			onError: (response) => {
-				console.error("error request", response);
-			},
-		});
-	}
-	export function intentViewAndPost(url: string, data: any, intent: IIntent = null): void {
-		if (intent !== null) {
-			self.intentView(intent, url);
-		}
-		AjaxWorker.fetch<any>({
-			url,
-			method: "POST",
-			headers: [
-				["request", "state"],
-			],
-			onSuccess: (response) => {
-				Nav.intentView(response.data.intent, response.urlRedirected);
-				// console.log("sucess -----");
-			},
-			onAbort: (request) => {
-				console.warn("aborted request", request);
-			},
-			onError: (response) => {
-				console.error("error request", response);
-			},
-		});
-	}
-
 	export function goback() {
 		window.history.back();
 	}
-	export function start(intent: IIntent): void {
-		const url: string = window.location.href;
+	export function start(): void;
+	export function start(intent: IIntent | null): void;
+	export function start(intent: IIntent | null = null): void {
+		let url: string;
+		if (intent === undefined || intent === null) {
+			const urlDataIntent: IUrlDataIntent = Helper.toUrlDataIntent(url);
+			intent = urlDataIntent.intent;
+			url = urlDataIntent.url;
+		}
+		if (intent !== null && intent !== undefined) {
+			if (url === undefined || url === null) {
+				url = window.location.href;
+			}
+			intentView(intent, url, intent.title);
+		}
 		window.onpopstate = (e: PopStateEvent) => {
 			intentViewPop(e.state);
 		};
-		self.intentViewAndRequest(window.location.href, intent);
 	}
-
 	export function intentView(intent: IIntent, url: string, title: string = null): void {
 		if (intent === undefined || intent === null) {
 			return;

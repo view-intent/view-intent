@@ -1,16 +1,20 @@
-export interface IState {
-    [actionName: string]: any;
+export interface IViewIntentResponse {
+    intent?: IIntent;
+    states?: IStateRoot[];
 }
-export interface IGlobalState {
-    [stateName: string]: IState;
+export interface IStateRoot {
+    stateName?: string;
+    actionName?: string;
+    args?: string[];
 }
-export interface IStates {
-    items: {
-        [stateName: string]: IState;
-    };
+export interface IUrlDataIntent {
+    url: string;
+    intentUrl?: string | null;
+    intent?: IIntent | null;
 }
 export interface IIntent {
     areaName: string;
+    redirect?: string | null;
     viewType: string;
     instanceId?: "new" | "last" | string | null | undefined;
     viewState?: any | null;

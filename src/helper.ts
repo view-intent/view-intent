@@ -1,6 +1,22 @@
-import { IIntent } from "./main-types";
+import { IIntent, IUrlDataIntent } from "./types";
 
 export namespace Helper {
+	export function toUrlDataIntent(url: string, intentUrl: string = null): IUrlDataIntent {
+		const dataIntent: IUrlDataIntent = {
+			url,
+			intentUrl: null,
+			intent: null,
+		};
+		if (url.indexOf("#") > -1 ) {
+			const splited = url.split("#");
+			if (isViewIntentPath(splited[1])) {
+				dataIntent.intentUrl = splited[1];
+				dataIntent.intent = pathToIntent(dataIntent.intentUrl);
+				dataIntent.url = splited[0];
+			}
+		}
+		return dataIntent;
+	}
 	export function isViewIntentPath(path: string) {
 		const pathArray = path.split(".");
 		if (pathArray.length === 2) {
@@ -15,6 +31,11 @@ export namespace Helper {
 		typeName = typeName.replace(dashRegExp, "");
 		return (areaName + "." + typeName).toLowerCase();
 	}
+	export function pathToIntent(intentUrl: string): IIntent;
+	export function pathToIntent(intentUrl: string, viewState: any): IIntent;
+	export function pathToIntent(intent: IIntent): IIntent;
+	export function pathToIntent(intent: IIntent, viewState: any): IIntent;
+	export function pathToIntent(intent: IIntent | string | null, viewState: any): IIntent;
 	export function pathToIntent(intent: IIntent | string | null, viewState: any = null): IIntent {
 		if (intent === null || intent === undefined) {
 			return null;

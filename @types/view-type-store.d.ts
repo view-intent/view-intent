@@ -1,4 +1,4 @@
-import { IViewInfo } from "./main-types";
+import { IViewInfo } from "./types";
 import View from "./view";
 export declare namespace ViewTypeStore {
     interface IViewTypeInfo {

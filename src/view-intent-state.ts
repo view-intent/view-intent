@@ -2,7 +2,7 @@ import lodash from "lodash";
 import { action, computed, extendShallowObservable, observable } from "mobx";
 // import { observer } from "mobx-react";
 import { process } from "uniqid";
-import { IIntent, IState, IStates } from "./main-types";
+import { IIntent } from "./types";
 import { View } from "./view";
 import { ViewTypeStore } from "./view-type-store";
 // import { setImmediate } from "timers";
@@ -146,8 +146,6 @@ export class ViewIntentState {
 		this.visibleViewIdList = newVisible;
 	}
 	@action public newViewInstance(intent: IIntent): ViewState {
-		// intent.instanceId =
-
 		this.viewStateList.push(new ViewState(intent));
 		const index: number = this.viewStateList.length - 1;
 		return this.viewStateList[index];

@@ -1,5 +1,6 @@
 /// <reference types="@types/react" />
-import { View, IViewInfo } from "./main";
+import { View } from "./main";
+import { IViewInfo } from "./types";
 export declare class ViewNotFound extends View<ViewNotFound.IProps, ViewNotFound.IState> {
     viewInfo: IViewInfo;
     state: ViewNotFound.IState;

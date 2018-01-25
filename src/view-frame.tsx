@@ -1,4 +1,3 @@
-// import { observer } from "mobx-react";
 import * as React from "react";
 import ReactCSSTransitionGroup from "react-addons-css-transition-group";
 import * as ReactDOM from "react-dom";
@@ -9,7 +8,6 @@ import { ViewTypeStore } from "./view-type-store";
 // import "./view-frame-transitions.scss";
 import { observe } from "mobx";
 
-// @observer
 export class ViewFrame extends React.Component<ViewFrame.IProps, ViewFrame.IState> {
 	public state: ViewFrame.IState = {
 		isRoot: this.props.root,
@@ -34,8 +32,6 @@ export class ViewFrame extends React.Component<ViewFrame.IProps, ViewFrame.IStat
 	public componentWillMount() {
 		this.unobserve = observe(ViewIntentState.Instance, (change) => {
 			this.forceUpdate();
-			// if (change.oldValue !== change.newValue) {
-			// }
 		});
 	}
 	public componentWillUnmount() {
@@ -43,7 +39,7 @@ export class ViewFrame extends React.Component<ViewFrame.IProps, ViewFrame.IStat
 	}
 	public renderViewList(): JSX.Element[] {
 		return ViewIntentState.Instance.getViewStateListByFrameId(this.state.id).map((viewState, index) => {
-			// console.log("visible", viewState, viewState.isVisible);
+
 			let ViewRenderComponent: View.IViewConstructor | null | any;
 			ViewRenderComponent = ViewTypeStore.getViewType(viewState.areaName, viewState.viewType);
 			return (viewState.isVisible ? <ViewRenderComponent key={viewState.instanceId} /> : null);

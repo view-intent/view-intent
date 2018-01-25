@@ -33,7 +33,8 @@
 
 import * as React from "react";
 import * as ReactDOM from "react-dom";
-import { View, ViewIntent, IViewInfo } from "./main";
+import { View, ViewIntent } from "./main";
+import { IViewInfo } from "./types";
 
 // import { View, ViewIntent, IViewInfo } from "view-intent";
 // import { RootStore } from "tonolucro-delivery-state";

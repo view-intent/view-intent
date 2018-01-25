@@ -1,75 +1,43 @@
-import { IGlobalState, IIntent, IState, IViewInfo } from "./main-types";
-export { IViewInfo } from "./main-types";
+import * as mobx from "mobx";
+import { IIntent, IViewInfo } from "./types";
 import { View } from "./view";
 import { ViewIntentState, ViewState } from "./view-intent-state";
 import { ViewTypeStore } from "./view-type-store";
-export { View } from "./view";
-export { ViewFrame } from "./view-frame";
-import * as mobx from "mobx";
 import { Nav } from "./nav";
 import { Helper } from "./helper";
 import { ViewNotFound } from "./view-error";
-import { StateStoreStore } from "./state-store-store";
+import { StateRoot } from "./state-root";
 import { ViewRoot } from "./view-root";
+import { DataFetch } from "./data-fetch";
+// ----------------------------------------
+export { View } from "./view";
+export { ViewFrame } from "./view-frame";
 
 mobx.extras.isolateGlobalState();
 
 export namespace ViewIntent {
-	export const globaStateInstance: any = null;
-	export function request(url: string, intent: IIntent | string = null, viewState: any = null): void {
-		const newIntent = Helper.pathToIntent(intent, viewState);
-		if (newIntent !== null) {
-			Nav.intentViewAndRequest(url, newIntent);
-		}
-	}
-	export function post(url: string, data: any, intent: IIntent | string = null, viewState: any = null): void {
-		const newIntent = Helper.pathToIntent(intent, viewState);
-		if (newIntent !== null) {
-			Nav.intentViewAndPost(url, data, newIntent);
-		}
-	}
+	export const Fetch = DataFetch;
 	// intent with string must be: areaName.ClassName:{id|"new"|"last"}
+	export function intentView(intent: IIntent, viewState: any): void;
+	export function intentView(intentUrl: string, viewState: any): void;
 	export function intentView(intent: IIntent | string, viewState: any = null): void {
 		const newIntent: IIntent = Helper.pathToIntent(intent, viewState);
 		if (newIntent != null) {
 			Nav.intentView(newIntent, null);
 		}
 	}
-	export function setGlobalState(globalState: IGlobalState): void {
-		if (this.globaStateInstance === null) {
-			throw new Error("globaState wasn't registered.");
-		} else {
-			for (const stateName in globalState) {
-				if (globalState.hasOwnProperty(stateName)) {
-					const state: IState = globalState[stateName];
-					for (const actionName in state) {
-						if (state.hasOwnProperty(actionName)) {
-							const actionValue = state[actionName];
-							const action: (actionValue: any) => void = globaStateInstance[stateName][actionName];
-							action(actionValue);
-						}
-					}
-				}
-			}
-		}
-	}
-	// export function registerViewType(areaName: string, typeName: string, viewType: View.IViewConstructor, frameId: string = "root", require: string[] = []) {
-	// 	ViewTypeStore.registerViewType(areaName, typeName, viewType, frameId, require);
-	// }
 	export function registerViewType(viewInfo: IViewInfo) {
 		ViewTypeStore.registerViewType(viewInfo);
 	}
-	export function init(intent: IIntent, element: string | HTMLElement): void {
+	export function init(element: string | HTMLElement): void;
+	export function init(element: string | HTMLElement, intent: IIntent = null): void {
 		ViewRoot.htmlInit(intent, element);
 		Nav.start(intent);
+		DataFetch.get(window.location.href);
 	}
-	// --------------------------------------------------
-	// states -------------------------------------------
-	export function registerStore<TStoreType>(storeName: string, store: TStoreType): void {
-		StateStoreStore.registerStore(storeName, store);
+	export function registerStateRoot(stateName: string, stateRootInstance: any) {
+		StateRoot.registerStateRoot(stateName, stateRootInstance);
 	}
 }
-
 ViewIntent.registerViewType(ViewNotFound.viewInfo);
-
 export default ViewIntent;

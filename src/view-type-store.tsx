@@ -1,4 +1,4 @@
-import { IIntent, IViewInfo } from "./main-types";
+import { IIntent, IViewInfo } from "./types";
 import View from "./view";
 import { Helper } from "./helper";
 

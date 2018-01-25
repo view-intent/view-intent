@@ -1,9 +1,8 @@
-import { IIntent, INavState } from "./main-types";
+import { IIntent, INavState } from "./types";
 export declare namespace Nav {
-    function intentViewAndRequest(url: string, intent?: IIntent): void;
-    function intentViewAndPost(url: string, data: any, intent?: IIntent): void;
     function goback(): void;
-    function start(intent: IIntent): void;
+    function start(): void;
+    function start(intent: IIntent | null): void;
     function intentView(intent: IIntent, url: string, title?: string): void;
     function intentViewPop(state: INavState): void;
 }

@@ -1,4 +1,4 @@
-import { IIntent } from "./main-types";
+import { IIntent } from "./types";
 import { ViewTypeStore } from "./view-type-store";
 export declare class ViewState {
     areaName: string;

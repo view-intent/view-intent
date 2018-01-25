@@ -1,7 +1,7 @@
 import * as React from "react";
 import * as ReactDOM from "react-dom";
 import { observe, IObjectChange } from "mobx";
-import { IIntent, IViewInfo } from "./main-types";
+import { IIntent, IViewInfo } from "./types";
 import { ViewIntentState } from "./view-intent-state";
 
 const equal: (value1: any, value2: any) => boolean = require("deep-equal");

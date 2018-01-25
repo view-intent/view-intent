@@ -1,4 +1,4 @@
-import { IIntent } from "./main-types";
+import { IIntent } from "./types";
 export declare namespace ViewRoot {
     function htmlInit(intent: IIntent, element: string | HTMLElement): void;
 }

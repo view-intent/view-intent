@@ -1,6 +1,6 @@
 /// <reference types="@types/react" />
 import * as React from "react";
-import { IIntent, IViewInfo } from "./main-types";
+import { IIntent, IViewInfo } from "./types";
 export declare abstract class View<TProps extends View.IProps, TState extends View.IState> extends React.Component<TProps, TState> implements View.IView<TProps, TState> {
     abstract viewInfo: IViewInfo;
     abstract state: TState;

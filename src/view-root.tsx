@@ -1,4 +1,4 @@
-import { IIntent } from "./main-types";
+import { IIntent } from "./types";
 import * as React from "react";
 import * as ReactDOM from "react-dom";
 import { ViewFrame } from "./view-frame";
