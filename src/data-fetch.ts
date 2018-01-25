@@ -3,7 +3,7 @@ import { IIntent, INavState, IViewIntentResponse } from "./types";
 import { Nav } from "./nav";
 import { Url } from "utility-collection";
 import { StateRoot } from "./state-root";
-
+//
 export namespace DataFetch {
 	const isReactNative: boolean = false;
 	export function get(url: string, data: { [prop: string]: string | number | boolean } = null): void {

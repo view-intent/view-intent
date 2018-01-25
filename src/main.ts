@@ -9,7 +9,7 @@ import { ViewNotFound } from "./view-error";
 import { StateRoot } from "./state-root";
 import { ViewRoot } from "./view-root";
 import { DataFetch } from "./data-fetch";
-// ----------------------------------------
+//
 export { View } from "./view";
 export { ViewFrame } from "./view-frame";
 
