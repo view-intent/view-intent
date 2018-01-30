@@ -2,9 +2,7 @@ node_modules
 .git
 .vs
 .vscode
-src
 desktop.ini
-test
 webpack*.js
 tslint.json
 tsconfig.json

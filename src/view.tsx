@@ -6,8 +6,6 @@ import { ViewIntentState } from "./view-intent-state";
 
 const equal: (value1: any, value2: any) => boolean = require("deep-equal");
 
-// observe( (change)=>{  });
-
 export abstract class View<TProps extends View.IProps, TState extends View.IState> extends React.Component<TProps, TState> implements View.IView<TProps, TState>  {
 	public abstract viewInfo: IViewInfo;
 	public abstract state: TState;

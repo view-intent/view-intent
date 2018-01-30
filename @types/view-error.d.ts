@@ -10,6 +10,7 @@ export declare class ViewNotFound extends View<ViewNotFound.IProps, ViewNotFound
 export declare namespace ViewNotFound {
     const viewInfo: IViewInfo;
     interface IProps extends View.IProps {
+        className?: string;
     }
     interface IState extends View.IState {
     }

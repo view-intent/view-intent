@@ -1,3 +1,4 @@
+
 import * as mobx from "mobx";
 import { IIntent, IViewInfo } from "./types";
 import { View } from "./view";
@@ -12,9 +13,11 @@ import { DataFetch } from "./data-fetch";
 //
 export { View } from "./view";
 export { ViewFrame } from "./view-frame";
+export * from "./types";
+export { IViewInfo } from "./types";
 
 mobx.extras.isolateGlobalState();
-
+console.warn("view-intent loaded 1");
 export namespace ViewIntent {
 	export const Fetch = DataFetch;
 	// intent with string must be: areaName.ClassName:{id|"new"|"last"}

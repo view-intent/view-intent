@@ -2,6 +2,8 @@ import { IIntent, IViewInfo } from "./types";
 import { DataFetch } from "./data-fetch";
 export { View } from "./view";
 export { ViewFrame } from "./view-frame";
+export * from "./types";
+export { IViewInfo } from "./types";
 export declare namespace ViewIntent {
     const Fetch: typeof DataFetch;
     function intentView(intent: IIntent, viewState: any): void;
