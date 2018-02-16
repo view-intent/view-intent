@@ -2,7 +2,7 @@ import { IIntent } from "./types";
 import * as React from "react";
 import * as ReactDOM from "react-dom";
 import { ViewFrame } from "./view-frame";
-
+export class ViewRoot {  }
 export namespace ViewRoot {
 	export function htmlInit(intent: IIntent, element: string | HTMLElement) {
 		setImmediate(() => {
@@ -10,9 +10,10 @@ export namespace ViewRoot {
 			if ( typeof element === "string" ) {
 				rootElement = document.getElementById(element as string) as HTMLElement;
 			}
-			ReactDOM.render(<ViewFrame stack="z" className="root" root={true} />, rootElement);
+			ReactDOM.render(<ViewFrame className="root" root={true} />, rootElement);
 			// console.log("view-intent");
 		});
 	}
 }
+
 export default ViewRoot;

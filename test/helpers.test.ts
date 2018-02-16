@@ -1,4 +1,3 @@
-import "../src/main";
 import { Helper } from "../src/helper";
 test("toUrlIntent()", () => {
 	const url: string = "/anyurl/test#areaname.viewtypeName:last";

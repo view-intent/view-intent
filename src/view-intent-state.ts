@@ -76,10 +76,22 @@ export class ViewIntentState {
 			return viewState.viewType.toLowerCase() === viewType && viewState.areaName.toLowerCase() === areaName;
 		});
 	}
-	public getViewStateById(instanceId: string): ViewState {
-		return this.viewStateList.find((viewState: ViewState) => {
-			return viewState.instanceId.toLowerCase() === instanceId.toLowerCase();
-		});
+	public getViewStateById(intent: IIntent): ViewState {
+		if (intent.instanceId !== undefined && intent.instanceId !== null) {
+			intent.instanceId = intent.instanceId.toLowerCase();
+		}
+		intent.viewType = intent.viewType.toLowerCase();
+		intent.areaName = intent.areaName.toLowerCase();
+		if (intent === null || intent === undefined) {
+			return this.viewStateList.find((viewState: ViewState) => {
+				if (viewState.instanceId.toLowerCase() === intent.viewType &&
+					viewState.viewType.toLowerCase() === intent.viewType &&
+					viewState.areaName.toLowerCase() === intent.areaName ) {
+						return true;
+				}
+			});
+		}
+		return null;
 	}
 	public isViewVisible(viewState: ViewState): boolean {
 		return this.visibleViewIdList.indexOf(viewState.instanceId.toLowerCase()) > -1;
@@ -103,7 +115,7 @@ export class ViewIntentState {
 			} else
 			if (loopIntent.instanceId.toLowerCase() !== "last" && loopIntent.instanceId.toLowerCase() !== "new" && loopIntent.instanceId !== null && loopIntent.instanceId !== undefined) {
 				// instance id
-				currentView = this.getViewStateById(loopIntent.instanceId);
+				currentView = this.getViewStateById(loopIntent);
 			}
 			// new instance
 			if (loopIntent.instanceId === "new" || currentView === null || currentView === undefined) {

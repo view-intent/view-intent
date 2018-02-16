@@ -8,6 +8,9 @@ export declare abstract class View<TProps extends View.IProps, TState extends Vi
     private mobxInstances;
     private mobxUnregiters;
     constructor(props: TProps);
+    ref<T extends React.Component | {
+        [key: string]: any;
+    }>(refName: string): T;
     bindStore(instance: any): void;
     componentWillMount(): void;
     componentWillUnmount(): void;

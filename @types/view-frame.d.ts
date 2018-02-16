@@ -15,7 +15,6 @@ export declare namespace ViewFrame {
         root?: boolean;
         id?: string;
         className?: string;
-        stack?: "x" | "y" | "z" | undefined;
     }
     interface IState {
         isRoot?: boolean;

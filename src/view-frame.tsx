@@ -46,27 +46,23 @@ export class ViewFrame extends React.Component<ViewFrame.IProps, ViewFrame.IStat
 		});
 	}
 	public render(): JSX.Element {
-		let { stack } = this.props;
-		let flexClassName: string = "";
-		if (stack === undefined || stack === null) {
-			stack = "x";
-		}
-		if ( stack === "x" || stack === "y") {
-			flexClassName = "view-intent-frame-flex";
-		}
-		return <ReactCSSTransitionGroup
-				transitionName={stack}
-				transitionAppear={true}
-				transitionLeave={false}
-				transitionEnter={true}
-				component="div"
-				id={this.props.id}
-				className={(this.props.className !== undefined && this.props.className !== null) ? "view-intent-frame " + this.props.className : "view-intent-frame"}
-				transitionEnterTimeout={300}
-				transitionLeaveTimeout={300}
-				transitionAppearTimeout={300}>
+		return <div
+			id={this.props.id}
+			className={(this.props.className !== undefined && this.props.className !== null) ? "view-intent-frame " + this.props.className : "view-intent-frame"}>
 				{this.renderViewList()}
-			</ReactCSSTransitionGroup>;
+			</div>;
+		// return <ReactCSSTransitionGroup
+		// 		transitionName="view-intent"
+		// 		transitionAppear={true}
+		// 		transitionLeave={false}
+		// 		transitionEnter={true}
+		// 		component="div"
+		// 		id={this.props.id}
+		// 		className={(this.props.className !== undefined && this.props.className !== null) ? "view-intent-frame " + this.props.className : "view-intent-frame"}
+		// 		transitionEnterTimeout={300}
+		// 		transitionAppearTimeout={300}>
+		// 		{this.renderViewList()}
+		// 	</ReactCSSTransitionGroup>;
 	}
 }
 export namespace ViewFrame {
@@ -75,7 +71,6 @@ export namespace ViewFrame {
 		root?: boolean;
 		id?: string;
 		className?: string;
-		stack?: "x" | "y" | "z" | undefined;
 	}
 	export interface IState {
 		isRoot?: boolean;

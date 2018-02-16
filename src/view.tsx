@@ -16,20 +16,25 @@ export abstract class View<TProps extends View.IProps, TState extends View.IStat
 	private mobxUnregiters: Array<() => void> = [];
 	public constructor(props: TProps) {
 		super(props);
+		// this.bindStore.bind(this);
+	}
+	public ref<T extends React.Component | {[key: string]: any}>(refName: string): T {
+		return this.refs[refName] as T;
 	}
 	public bindStore(instance: any) {
 		this.mobxInstances.push(instance);
+		// this.mobxInstances[this.mobxInstances.length - 1].bind(this.mobxInstances[this.mobxInstances.length - 1]);
 	}
 	// public inject(state: any): void {
 	// 	this.setState(state);
 	// }
 	public componentWillMount(): void {
 		const self = this;
-		this.mobxInstances.forEach((instance) => {
-			this.mobxUnregiters.push(observe(instance, (change) => {
-				if (!equal(change.oldValue, change.newValue)) {
-					this.forceUpdate();
-				}
+		self.mobxInstances.forEach((instance) => {
+			self.mobxUnregiters.push(observe(instance, (change) => {
+				self.forceUpdate();
+				// if (!equal(change.oldValue, change.newValue)) {
+				// }
 			}));
 		});
 	}

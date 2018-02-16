@@ -19,7 +19,7 @@ export declare class ViewIntentState {
     visibleViewIdList: string[];
     getViewStateListByFrameId(frameId: string): ViewState[];
     getLastViewStateByType(areaName: string, viewType: string): ViewState;
-    getViewStateById(instanceId: string): ViewState;
+    getViewStateById(intent: IIntent): ViewState;
     isViewVisible(viewState: ViewState): boolean;
     processIntent(intent: IIntent): void;
     newViewInstance(intent: IIntent): ViewState;
