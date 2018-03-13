@@ -1,10 +1,12 @@
 /// <reference types="@types/react" />
 import * as React from "react";
 import { IIntent, IViewInfo } from "./types";
+import { ViewState } from "./view-intent-state";
 export declare abstract class View<TProps extends View.IProps, TState extends View.IState> extends React.Component<TProps, TState> implements View.IView<TProps, TState> {
     abstract viewInfo: IViewInfo;
     abstract state: TState;
     readonly viewClassName: string;
+    viewState: ViewState | null;
     private mobxInstances;
     private mobxUnregiters;
     constructor(props: TProps);
@@ -13,8 +15,10 @@ export declare abstract class View<TProps extends View.IProps, TState extends Vi
     }>(refName: string): T;
     bindStore(instance: any): void;
     componentWillMount(): void;
+    updateViewState(): void;
+    componentWillReceiveProps(newProp: TProps): void;
     componentWillUnmount(): void;
-    abstract render(): JSX.Element;
+    abstract render(): React.ReactNode | JSX.Element | JSX.Element[];
 }
 export declare namespace View {
     interface IState {
@@ -22,6 +26,7 @@ export declare namespace View {
     interface IProps {
         instanceId?: string;
         visible?: boolean;
+        viewState?: ViewState;
     }
     interface IView<TProps extends IProps, TState extends IState> {
     }

@@ -4,80 +4,94 @@ import { Nav } from "./nav";
 import { Url, Is } from "utility-collection";
 import { StateRoot } from "./state-root";
 import { Helper } from "./helper";
+import { IResponseOptions, IRequestOptions } from "ajax-worker/@types/interfaces";
+// import {} from "ts-seriali"
 //
 export namespace DataFetch {
 	const isReactNative: boolean = false;
-	// function intentViewFromUrl(url: string): void {
-	// 	const urlDataIntent = Helper.toUrlDataIntent(url);
-	// 	if (urlDataIntent.intent !== null) {
-	// 		Nav.intentView(urlDataIntent.intent, urlDataIntent.url);
-	// 	}
-	// }
-	export function get(url: string, data: { [prop: string]: string | number | boolean } = null): void {
+	export async function get<T>(url: string, data: { [prop: string]: string | number | boolean | any } | any = null): Promise<IResponseOptions<T>> {
 		const u = new Url(url);
-		u.setQueries(data);
-		genericFetch(url, "get");
+		u.setQueries(data!);
+		return await genericFetch<T>(url, "get");
 	}
-	export function post(url: string, data: { [prop: string]: string | number | boolean } = {}): void {
-		genericFetch(url, "post", data);
+	export async function post<T>(url: string, data: { [prop: string]: string | number | boolean | any } | any = {}): Promise<IResponseOptions<T>> {
+		return await genericFetch<T>(url, "post", data);
 	}
-	export function put(url: string, data: { [prop: string]: string | number | boolean } = {}): void {
-		genericFetch(url, "put", data);
+	export async function put<T>(url: string, data: { [prop: string]: string | number | boolean | any } | any = {}): Promise<IResponseOptions<T>> {
+		return await genericFetch<T>(url, "put", data);
 	}
-	export function patch(url: string, data: { [prop: string]: string | number | boolean } = {}): void {
-		genericFetch(url, "patch", data);
+	export async function patch<T>(url: string, data: { [prop: string]: string | number | boolean | any } | any = {}): Promise<IResponseOptions<T>> {
+		return await genericFetch<T>(url, "patch", data);
 	}
-	export function del(url: string, data: { [prop: string]: string | number | boolean } = {}): void {
+	export async function del<T>(url: string, data: { [prop: string]: string | number | boolean | any } | any = {}): Promise<IResponseOptions<T>> {
 		const u = new Url("url");
 		u.setQueries(data);
-		genericFetch(url, "delete");
+		return await genericFetch<T>(url, "delete");
 	}
-	function genericFetch(url: string, method: string, data: { [prop: string]: string | number | boolean } = {}): void {
-		let viewIntentedPushed: boolean = false;
-		const urlDataIntent = Helper.toUrlDataIntent(url);
-		if (!Is.nullOrUndefined(urlDataIntent.intent)) {
-			if (!Is.nullOrUndefined(urlDataIntent.intent.viewType) && !Is.nullOrUndefined(urlDataIntent.intent.areaName)) {
-				viewIntentedPushed = true;
-				Nav.intentView(urlDataIntent.intent, urlDataIntent.url);
+	async function  genericFetch<T>(url: string, method: string, data: { [prop: string]: string | number | boolean | any } | any = {}): Promise<IResponseOptions<T>> {
+		return new Promise<IResponseOptions<T>>((resolve, reject) => {
+			let viewIntentedPushed: boolean = false;
+			const urlDataIntent = Helper.toUrlDataIntent(url);
+			if (!Is.nullOrUndefined(urlDataIntent.intent)) {
+				if (!Is.nullOrUndefined(urlDataIntent.intent!.viewType) && !Is.nullOrUndefined(urlDataIntent.intent!.areaName)) {
+					viewIntentedPushed = true;
+					Nav.intentView(urlDataIntent.intent!, urlDataIntent.url!);
+				}
 			}
-		}
-		if (urlDataIntent.url !== null && urlDataIntent.url !== undefined && urlDataIntent.url !== "") {
-			// console.warn("TODO: increment the loader count here.");
-			AjaxWorker.fetch<IViewIntentResponse>({
-				id: method !== "get" ? undefined : "getviewintentfetch",
-				url: urlDataIntent.url,
-				body: method !== "get" && method !== "delete" ? data : undefined,
-				method,
-				headers: [
-					["request", "state"],
-					["Accept", "application/json"],
-					["Content-Type", "application/json"],
-				],
-				onSuccess: (response) => {
-					if (!viewIntentedPushed || response.redirected) {
-						Nav.intentView(response.data.intent, response.urlRedirected);
-					}
-					if (!Is.nullOrUndefined(response.data.intent)) {
-						if (!Is.nullOrUndefined(response.data.intent.redirect)) {
-							setImmediate(() => {
-								DataFetch.get(response.data.intent.redirect);
-							});
+			if (urlDataIntent.url !== null && urlDataIntent.url !== undefined && urlDataIntent.url !== "") {
+				AjaxWorker.fetch<T>({
+					id: method !== "get" ? undefined : "getviewintentfetch",
+					url: urlDataIntent.url,
+					body: method !== "get" && method !== "delete" ? data : undefined,
+					method,
+					headers: [
+						["request", "state"],
+						["Accept", "application/json"],
+						["Content-Type", "application/json"],
+					],
+					onSuccess: (response) => {
+						// if is Intent
+						if ((response.data! as IViewIntentResponse).intent !== undefined && (response.data! as IViewIntentResponse).intent !== null ) {
+							const data = response.data! as IViewIntentResponse;
+							if ( !response.urlRedirected!.includes("p=") ) {
+								if (!viewIntentedPushed || response.redirected) {
+										Nav.intentView(data.intent!, response.urlRedirected!);
+								}
+								if (!Is.empty(data.intent!.redirect)) {
+									setImmediate(async () => {
+										resolve(await DataFetch.get<T>(data.intent!.redirect!));
+									});
+								} else {
+									setImmediate(async () => {
+										resolve(response);
+									});
+								}
+								// if (!Is.empty(data.intent)) {
+								// }
+							}
+							// contain state
+							if ((response.data! as IViewIntentResponse).states !== undefined && (response.data! as IViewIntentResponse).states !== null) {
+								StateRoot.applyStatesRoots((response.data! as IViewIntentResponse).states!);
+							}
+						} else {
+							resolve(response);
 						}
-					}
-					StateRoot.applyStatesRoots(response.data.states);
-				},
-				onAbort: (response) => {
-					// console.error("aborted request", response);
-				},
-				onError: (response) => {
-					// console.error("error request", response);
-				},
-				onDone: (response) => {
-					// console.error("done request", response);
-					// console.warn("TODO: decrease the loader counter here.");
-				},
-			});
-		}
+
+					},
+					onAbort: (response) => {
+						// console.error("aborted request", response);
+					},
+					onError: (response) => {
+						reject(response);
+						// console.error("error request", response);
+					},
+					onDone: (response) => {
+						// console.error("done request", response);
+						// console.warn("TODO: decrease the loader counter here.");
+					},
+				});
+			}
+		});
 	}
 }
 export default DataFetch;

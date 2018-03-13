@@ -1,8 +1,9 @@
 import * as React from "react";
 import * as ReactDOM from "react-dom";
 import { observe, IObjectChange } from "mobx";
-import { IIntent, IViewInfo } from "./types";
-import { ViewIntentState } from "./view-intent-state";
+import { IIntent, IViewInfo, INavState } from "./types";
+import { ViewIntentState, ViewState } from "./view-intent-state";
+import { Reflection } from "utility-collection";
 
 const equal: (value1: any, value2: any) => boolean = require("deep-equal");
 
@@ -12,11 +13,14 @@ export abstract class View<TProps extends View.IProps, TState extends View.IStat
 	public get viewClassName() {
 		return this.viewInfo.area.toLowerCase() + "-" + this.viewInfo.name.toLowerCase();
 	}
+	public viewState: ViewState | null = null;
 	private mobxInstances: Array<(change: IObjectChange) => void> = [];
 	private mobxUnregiters: Array<() => void> = [];
 	public constructor(props: TProps) {
 		super(props);
+		this.viewState = props.viewState!;
 		// this.bindStore.bind(this);
+		// this!.state = props.viewState!.viewState;
 	}
 	public ref<T extends React.Component | {[key: string]: any}>(refName: string): T {
 		return this.refs[refName] as T;
@@ -33,17 +37,25 @@ export abstract class View<TProps extends View.IProps, TState extends View.IStat
 		self.mobxInstances.forEach((instance) => {
 			self.mobxUnregiters.push(observe(instance, (change) => {
 				self.forceUpdate();
-				// if (!equal(change.oldValue, change.newValue)) {
-				// }
 			}));
 		});
+		// update state before mount
+		this.updateViewState();
+	}
+	public updateViewState(): void {
+		if (this.props.viewState && this.props.viewState.viewState) {
+			this.setState(this.props.viewState.viewState);
+		}
+	}
+	public componentWillReceiveProps(newProp: TProps) {
+		this.updateViewState();
 	}
 	public componentWillUnmount(): void {
 		while (this.mobxUnregiters.length > 0) {
-			this.mobxUnregiters.pop()();
+			this.mobxUnregiters.pop()!();
 		}
 	}
-	public abstract render(): JSX.Element;
+	public abstract render(): React.ReactNode | JSX.Element | JSX.Element[];
 }
 export namespace View {
 	export interface IState {
@@ -52,10 +64,10 @@ export namespace View {
 		// store?: TStore;
 		instanceId?: string;
 		visible?: boolean;
+		// navState?: INavState;
+		viewState?: ViewState ;
 	}
-	export interface IView<TProps extends IProps, TState extends IState> {
-
-	}
+	export interface IView<TProps extends IProps, TState extends IState> {}
 	export interface IViewConstructor {
 		require?: () => IIntent[];
 		// new(props: any): View<any, any, any>;

@@ -88,6 +88,7 @@
 	},
 	"dependencies": {
 		"@babel/preset-env": "^7.0.0-beta.39",
+		"@types/circular-json": "^0.4.0",
 		"@types/deep-equal": "^1.0.1",
 		"@types/jquery": "^3.3.0",
 		"@types/jsx-chai": "^3.0.16",
@@ -100,11 +101,14 @@
 		"@types/window-or-global": "^1.0.0",
 		"ajax-worker": "^1.8.10",
 		"babel-loader": "^7.1.2",
+		"circular-json": "^0.5.1",
 		"deep-equal": "^1.0.1",
+		"localforage": "^1.5.6",
 		"mobx": "^3.4.1",
 		"raw-loader": "^0.5.1",
 		"react-addons-css-transition-group": "^15.6.2",
 		"uniqid": "^4.1.1",
-		"utility-collection": "^1.8.26"
+		"utility-collection": "^1.8.26",
+		"view-intent-mobx": "^0.2.0"
 	}
 }

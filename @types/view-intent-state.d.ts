@@ -17,12 +17,13 @@ export declare class ViewIntentState {
     static readonly Instance: ViewIntentState;
     viewStateList: ViewState[];
     visibleViewIdList: string[];
-    getViewStateListByFrameId(frameId: string): ViewState[];
-    getLastViewStateByType(areaName: string, viewType: string): ViewState;
-    getViewStateById(intent: IIntent): ViewState;
+    private lastProcessed;
+    getViewStateListByFrameId(frameId: string | null): ViewState[];
+    getLastViewStateByType(areaName: string, viewType: string): ViewState | null;
+    getViewStateById(intent: IIntent): ViewState | null;
     isViewVisible(viewState: ViewState): boolean;
-    processIntent(intent: IIntent): void;
-    newViewInstance(intent: IIntent): ViewState;
+    processIntent(intent: IIntent, url?: string | null): void;
+    newViewInstance(intent: IIntent, unshift?: boolean): ViewState;
 }
 declare const _default: ViewIntentState;
 export default _default;

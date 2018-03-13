@@ -31,8 +31,8 @@ export namespace ViewIntentDom {
 						return;
 					}
 				}
-				if (Helper.isViewIntentUrl(linkHref)) {
-					DataFetch.get(linkHref);
+				if (Helper.isViewIntentUrl(linkHref!)) {
+					DataFetch.get(linkHref!);
 					e.preventDefault();
 				}
 			}

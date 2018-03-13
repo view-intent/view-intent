@@ -4,6 +4,6 @@ export declare namespace Nav {
     function goback(): void;
     function start(): void;
     function start(intent: IIntent | null): void;
-    function intentView(intent: IIntent, url: string, title?: string): void;
+    function intentView(intent: IIntent, url: string, title?: string | null): void;
     function intentViewPop(state: INavState): void;
 }

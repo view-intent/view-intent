@@ -10,8 +10,12 @@ import { setTimeout } from "timers";
 export namespace Nav {
 	const self = Nav;
 	let navWaiting: boolean = false;
-	let lastIntent: IIntent = null;
+	let lastIntent: IIntent | null = null;
+
 	export function navWait(intent: IIntent): boolean {
+		if (Is.nullOrUndefined(intent)) {
+			return false;
+		}
 		if (lastIntent !== null) {
 			if (intent.viewType !== lastIntent.viewType || intent.areaName !== lastIntent.areaName) {
 				lastIntent = intent;
@@ -38,8 +42,8 @@ export namespace Nav {
 	}
 	export function start(): void;
 	export function start(intent: IIntent | null): void;
-	export function start(intent: IIntent | null = null): void {
-		let url: string;
+	export function start(intent: IIntent | null | undefined = null): void {
+		let url: string | null = null;
 		if (intent === undefined || intent === null) {
 			const urlDataIntent: IUrlDataIntent = Helper.toUrlDataIntent(url);
 			intent = urlDataIntent.intent;
@@ -51,11 +55,15 @@ export namespace Nav {
 			}
 			intentView(intent, url, intent.title);
 		}
-		window.onpopstate = (e: PopStateEvent) => {
-			intentViewPop(e.state);
-		};
+		// window.addEventListener("popstate", (e) => {
+		// 	intentViewPop(e.state);
+		// });
+		// window.onpopstate = (e: PopStateEvent) => {
+		// 	intentViewPop(e.state);
+		// };
 	}
-	export function intentView(intent: IIntent, url: string, title: string = null): void {
+	const intentViewLastIntent: any = {};
+	export function intentView(intent: IIntent, url: string, title: string | null = null): void {
 		if (navWait(intent)) { return; }
 		if (intent === undefined || intent === null) {
 			return;
@@ -64,7 +72,7 @@ export namespace Nav {
 		intent.areaName === "" || intent.areaName === undefined || intent.areaName === null) {
 			return;
 		}
-		let instanceId: string = intent.instanceId;
+		let instanceId: string | undefined | null = intent.instanceId;
 		if (instanceId === null || instanceId === undefined) {
 			instanceId = process();
 		}
@@ -78,7 +86,7 @@ export namespace Nav {
 			instanceId,
 			viewType: intent.viewType,
 			title,
-			url,
+			url: (Is.nullOrUndefined( intent.redirect) ? url : intent.redirect),
 			viewState: intent.viewState,
 		};
 		// should replace ----------------------------
@@ -86,10 +94,10 @@ export namespace Nav {
 		let shouldNavigate: boolean = true;
 		const currentNavState: INavState = window.history.state;
 		if (!shouldReplace) {
-			if (intent.instanceId === "last" && currentNavState.viewType === intent.viewType) {
-				shouldReplace = true;
-			}
 			if (navState.url === null || navState.url === undefined || navState.url === "") {
+				shouldNavigate = false;
+			}
+			if (currentNavState.viewType === navState.viewType && currentNavState.areaName === navState.areaName && currentNavState.viewState === navState.viewState && navState.url === currentNavState.url ) {
 				shouldNavigate = false;
 			}
 			if (currentNavState.url === navState.url && currentNavState.viewType === intent.viewType) {
@@ -98,16 +106,21 @@ export namespace Nav {
 			if (navState.url === window.location.href) {
 				shouldReplace = true;
 			}
+			if (navState.url!.replace(window.location.origin, "") === currentNavState.url!.replace(window.location.origin, "")) {
+				shouldReplace = true;
+			}
 		}
 		// push or replace ---------------------------
 		if (shouldNavigate) {
+			const pushUrl: string = (!Is.nullOrUndefined(navState.url) ? navState.url as string : "./");
+			const pushTitle: string = (!Is.nullOrUndefined(navState.title) ? navState.title as string : document.getElementsByTagName("title")[0].innerText);
 			if (shouldReplace) {
-				history.replaceState(navState, navState.title, navState.url);
+				history.replaceState(navState, pushTitle, pushUrl);
 			} else {
-				window.history.pushState(navState, navState.title, navState.url);
+				window.history.pushState(navState, pushTitle, pushUrl);
 			}
+			ViewIntentState.Instance.processIntent(intent, pushUrl);
 		}
-		ViewIntentState.Instance.processIntent(intent);
 	}
 	export function intentViewPop(state: INavState): void {
 		if (state !== null && state !== undefined) {
@@ -117,7 +130,7 @@ export namespace Nav {
 				viewType: state.viewType,
 				viewState: state.viewState,
 			};
-			ViewIntentState.Instance.processIntent(intent);
+			ViewIntentState.Instance.processIntent(intent, state.url);
 		}
 	}
 }

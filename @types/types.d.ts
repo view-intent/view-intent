@@ -8,7 +8,7 @@ export interface IStateRoot {
     args?: string[];
 }
 export interface IUrlDataIntent {
-    url: string;
+    url: string | null;
     intentUrl?: string | null;
     intent?: IIntent | null;
 }
@@ -24,8 +24,8 @@ export interface INavState {
     areaName: string;
     viewType: string;
     instanceId?: "new" | "last" | string | null | undefined;
-    url?: string;
-    title?: string;
+    url?: string | null;
+    title?: string | null;
     viewState?: any | null;
 }
 export interface IViewInfo {

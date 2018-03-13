@@ -1,7 +1,8 @@
 import { IIntent, IUrlDataIntent } from "./types";
+import { Is } from "utility-collection";
 
 export namespace Helper {
-	export function toUrlDataIntent(url: string): IUrlDataIntent {
+	export function toUrlDataIntent(url: string | null): IUrlDataIntent {
 		const dataIntent: IUrlDataIntent = {
 			url,
 			intentUrl: null,
@@ -23,6 +24,9 @@ export namespace Helper {
 		return dataIntent;
 	}
 	export function isViewIntentUrl(url: string) {
+		if (Is.nullOrUndefined(url)) {
+			return false;
+		}
 		const splited = url.split("#");
 		if (splited.length < 2) {
 			return false;
@@ -54,7 +58,7 @@ export namespace Helper {
 	export function pathToIntent(intent: IIntent): IIntent;
 	export function pathToIntent(intent: IIntent, viewState: any): IIntent;
 	export function pathToIntent(intentOrUrl: IIntent | string, viewState: any): IIntent;
-	export function pathToIntent(intentOrUrl: IIntent | string, viewState: any = null): IIntent {
+	export function pathToIntent(intentOrUrl: IIntent | string, viewState: any = null): IIntent | null {
 		if (intentOrUrl === null || intentOrUrl === undefined) {
 			return null;
 		}

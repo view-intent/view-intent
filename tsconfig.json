@@ -5,7 +5,7 @@
 		"declarationDir": "./@types",
 		"sourceMap": true,
 		"noImplicitAny": true,
-		"module": "es2015",
+		"module": "es6",
 		"target": "es2015",
 		"moduleResolution": "node",
 		"skipLibCheck": true,
@@ -16,6 +16,7 @@
 		"emitDecoratorMetadata": true,
 		"experimentalDecorators": true,
 		"noEmit": false,
+		"strictNullChecks": true,
 		"lib": [
 			"es5",
 			"es6",

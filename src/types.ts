@@ -1,4 +1,3 @@
-
 export interface IViewIntentResponse {
 	intent?: IIntent;
 	states?: IStateRoot[];
@@ -10,7 +9,7 @@ export interface IStateRoot {
 }
 // -------------------
 export interface IUrlDataIntent {
-	url: string; // exemple: area.TypeName:1  or  any_url_string_here#area.TypeName:1
+	url: string | null; // exemple: area.TypeName:1  or  any_url_string_here#area.TypeName:1
 	intentUrl?: string | null;
 	intent?: IIntent | null;
 }
@@ -26,8 +25,8 @@ export interface INavState {
 	areaName: string;
 	viewType: string;
 	instanceId?: "new" | "last" | string | null | undefined;
-	url?: string;
-	title?: string;
+	url?: string | null;
+	title?: string | null;
 	viewState?: any | null;
 }
 export interface IViewInfo {

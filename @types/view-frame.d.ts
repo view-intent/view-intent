@@ -6,7 +6,7 @@ export declare class ViewFrame extends React.Component<ViewFrame.IProps, ViewFra
     constructor(props: ViewFrame.IProps);
     componentWillMount(): void;
     componentWillUnmount(): void;
-    renderViewList(): JSX.Element[];
+    renderViewList(): Array<JSX.Element | undefined>;
     render(): JSX.Element;
 }
 export declare namespace ViewFrame {

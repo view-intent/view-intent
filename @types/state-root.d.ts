@@ -4,7 +4,7 @@ export declare namespace StateRoot {
         [stateName: string]: any;
     };
     function registerStateRoot<T>(stateRootName: string, stateRootInstance: T): T;
-    function getStateRoot<T>(stateRoot: string): T;
+    function getStateRoot<T>(stateRootName: string): T;
     function getStateRootAction(stateRootName: string, actionName: string): any;
     function applyStateRoot(stateRoot: IStateRoot): void;
     function applyStatesRoots(statesRoots: IStateRoot[]): void;
