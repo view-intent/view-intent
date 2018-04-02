@@ -1,12 +1,12 @@
-import { IStateRoot } from "./types";
-export declare namespace StateRoot {
+import { IRootStore } from "./types";
+export declare namespace RootStore {
     const stateRootStore: {
         [stateName: string]: any;
     };
-    function registerStateRoot<T>(stateRootName: string, stateRootInstance: T): T;
-    function getStateRoot<T>(stateRootName: string): T;
-    function getStateRootAction(stateRootName: string, actionName: string): any;
-    function applyStateRoot(stateRoot: IStateRoot): void;
-    function applyStatesRoots(statesRoots: IStateRoot[]): void;
+    function registerRootStore<T>(stateRootName: string, stateRootInstance: T): T;
+    function getRootStore<T>(stateRootName: string): T;
+    function getRootStoreAction(stateRootName: string, actionName: string): any;
+    function applyRootStore(stateRoot: IRootStore): void;
+    function applyStatesRoots(statesRoots: IRootStore[]): void;
 }
-export default StateRoot;
+export default RootStore;

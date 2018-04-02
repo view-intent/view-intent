@@ -1,8 +1,8 @@
 export interface IViewIntentResponse {
     intent?: IIntent;
-    states?: IStateRoot[];
+    states?: IRootStore[];
 }
-export interface IStateRoot {
+export interface IRootStore {
     stateName?: string;
     actionName?: string;
     args?: string[];

@@ -1,4 +1,5 @@
-import { observe, toJS } from "mobx";
+// import { observe, toJS } from "mobx";
+import { observe, toJS } from "view-intent-mobx";
 import * as localforage from "localforage";
 import { Reflection } from "utility-collection";
 import { Is } from "utility-collection";
@@ -22,7 +23,9 @@ export namespace Persistent {
 	export function init(stateRootName: string, stateRootInstance: any) {
 		if (stateRootInstance.persistOutput !== undefined && stateRootInstance.persistInput !== undefined) {
 			observe(stateRootInstance, (change) => {
-				saveState(stateRootName, stateRootInstance.persistOutput());
+				if ((change as any).name !== "viUpVersion") {
+					saveState(stateRootName, stateRootInstance.persistOutput());
+				}
 			});
 			restoreState(stateRootName, stateRootInstance);
 		}

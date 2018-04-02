@@ -16,7 +16,7 @@ export declare namespace ViewIntent {
     function intentView(url: string, viewState: any): void;
     function registerViewType(viewInfo: IViewInfo): void;
     function init(element: string | HTMLElement): void;
-    function registerStateRoot<T>(stateName: string, stateRootInstance: T): T;
-    function getStateRoot<T>(stateName: string): T;
+    function registerRootStore<T>(stateName: string, stateRootInstance: T): T;
+    function getRootStore<T>(stateName: string, stateRootClass?: any): T | undefined;
 }
 export default ViewIntent;

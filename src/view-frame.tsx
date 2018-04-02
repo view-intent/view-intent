@@ -6,7 +6,8 @@ import { ViewIntentState, ViewState } from "./view-intent-state";
 import { ViewTypeStore } from "./view-type-store";
 // import "./view-frame.scss";
 // import "./view-frame-transitions.scss";
-import { observe } from "mobx";
+// import { observe } from "mobx";
+import { observe, toJS } from "view-intent-mobx";
 import * as uniqid from "uniqid";
 
 export class ViewFrame extends React.Component<ViewFrame.IProps, ViewFrame.IState> {

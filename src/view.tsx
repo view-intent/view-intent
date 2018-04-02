@@ -1,6 +1,7 @@
 import * as React from "react";
 import * as ReactDOM from "react-dom";
-import { observe, IObjectChange } from "mobx";
+// import { observe } from "mobx";
+import { observe, autorun } from "view-intent-mobx";
 import { IIntent, IViewInfo, INavState } from "./types";
 import { ViewIntentState, ViewState } from "./view-intent-state";
 import { Reflection } from "utility-collection";
@@ -14,7 +15,7 @@ export abstract class View<TProps extends View.IProps, TState extends View.IStat
 		return this.viewInfo.area.toLowerCase() + "-" + this.viewInfo.name.toLowerCase();
 	}
 	public viewState: ViewState | null = null;
-	private mobxInstances: Array<(change: IObjectChange) => void> = [];
+	private mobxInstances: Array<(change: any) => void> = [];
 	private mobxUnregiters: Array<() => void> = [];
 	public constructor(props: TProps) {
 		super(props);

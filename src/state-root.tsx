@@ -1,9 +1,9 @@
-import { IStateRoot } from "./types";
+import { IRootStore } from "./types";
 import { Persistent } from "./persistent";
 
-export namespace StateRoot {
+export namespace RootStore {
 	export const stateRootStore: { [stateName: string]: any } = {};
-	export function registerStateRoot<T>(stateRootName: string, stateRootInstance: T): T {
+	export function registerRootStore<T>(stateRootName: string, stateRootInstance: T): T {
 		stateRootStore[stateRootName.toLowerCase()] = stateRootInstance as T;
 		if ("persistInput" in stateRootInstance && "persistOutput" in stateRootInstance) {
 			// console.log("persist", stateRootName);
@@ -11,10 +11,10 @@ export namespace StateRoot {
 		}
 		return stateRootStore[stateRootName.toLowerCase()] as T;
 	}
-	export function getStateRoot<T>(stateRootName: string) {
+	export function getRootStore<T>(stateRootName: string) {
 		return stateRootStore[stateRootName.toLowerCase()] as T;
 	}
-	export function getStateRootAction(stateRootName: string, actionName: string) {
+	export function getRootStoreAction(stateRootName: string, actionName: string) {
 		const name = stateRootName.toLowerCase();
 		if ( stateRootStore[name] !== undefined) {
 			if ( stateRootStore[name][actionName] !== undefined) {
@@ -27,20 +27,20 @@ export namespace StateRoot {
 		}
 		return null;
 	}
-	export function applyStateRoot(stateRoot: IStateRoot) {
+	export function applyRootStore(stateRoot: IRootStore) {
 		const stateName = stateRoot.stateName!.toLowerCase();
 		const actionName = stateRoot.actionName;
-		const stateRootAction = getStateRootAction(stateName, actionName!);
+		const stateRootAction = getRootStoreAction(stateName, actionName!);
 		if ( stateRootAction !== null) {
-			stateRootAction.apply(this.getStateRoot(stateName), stateRoot.args);
+			stateRootAction.apply(this.getRootStore(stateName), stateRoot.args);
 		}
 	}
-	export function applyStatesRoots(statesRoots: IStateRoot[]) {
+	export function applyStatesRoots(statesRoots: IRootStore[]) {
 		if (statesRoots !== undefined && statesRoots !== null) {
 			statesRoots.forEach((stateRoot) => {
-				this.applyStateRoot(stateRoot);
+				this.applyRootStore(stateRoot);
 			});
 		}
 	}
 }
-export default StateRoot;
+export default RootStore;

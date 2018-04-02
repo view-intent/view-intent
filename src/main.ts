@@ -1,12 +1,12 @@
-import * as mobx from "mobx";
-import { IIntent, IViewInfo } from "./types";
+// import * as mobx from "mobx";
+import { IIntent, IViewInfo, IRootStore } from "./types";
 import { View } from "./view";
 import { ViewIntentState, ViewState } from "./view-intent-state";
 import { ViewTypeStore } from "./view-type-store";
 import { Nav } from "./nav";
 import { Helper } from "./helper";
 import { ViewNotFound } from "./view-error";
-import { StateRoot } from "./state-root";
+import { RootStore } from "./state-root";
 import { ViewRoot } from "./view-root";
 import { DataFetch } from "./data-fetch";
 import { Is } from "utility-collection";
@@ -17,8 +17,7 @@ export { ViewFrame } from "./view-frame";
 export * from "./data-fetch";
 export * from "./types";
 
-mobx.extras.isolateGlobalState();
-
+// mobx.extras.isolateGlobalState();
 export namespace ViewIntent {
 	export const get = DataFetch.get;
 	export const post = DataFetch.post;
@@ -53,14 +52,20 @@ export namespace ViewIntent {
 		ViewIntentDom.init();
 		window.addEventListener("popstate", (e) => {
 			Nav.intentViewPop(e.state);
-			// DataFetch.get(window.location.href);
+			// DataFetch.get(window.location.href); // best without
 		});
 	}
-	export function registerStateRoot<T>(stateName: string, stateRootInstance: T): T {
-		return StateRoot.registerStateRoot<T>(stateName, stateRootInstance);
+	export function registerRootStore<T>(stateName: string, stateRootInstance: T): T {
+		return RootStore.registerRootStore<T>(stateName, stateRootInstance);
 	}
-	export function getStateRoot<T>(stateName: string) {
-		return StateRoot.getStateRoot<T>(stateName);
+	export function getRootStore<T >(stateName: string, stateRootClass?: any): T | undefined {
+		if (RootStore.getRootStore<T>(stateName) !== undefined && RootStore.getRootStore<T>(stateName) !== null) {
+			return RootStore.getRootStore<T>(stateName);
+		} else {
+			if (stateRootClass !== undefined) {
+				return RootStore.registerRootStore<T>(stateName, new stateRootClass());
+			}
+		}
 	}
 }
 ViewIntent.registerViewType(ViewNotFound.viewInfo);

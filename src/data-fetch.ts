@@ -2,9 +2,11 @@ import { AjaxWorker } from "ajax-worker";
 import { IIntent, INavState, IViewIntentResponse } from "./types";
 import { Nav } from "./nav";
 import { Url, Is } from "utility-collection";
-import { StateRoot } from "./state-root";
+import { RootStore } from "./state-root";
 import { Helper } from "./helper";
 import { IResponseOptions, IRequestOptions } from "ajax-worker/@types/interfaces";
+import { process as uniq } from "uniqid";
+
 // import {} from "ts-seriali"
 //
 export namespace DataFetch {
@@ -40,7 +42,8 @@ export namespace DataFetch {
 			}
 			if (urlDataIntent.url !== null && urlDataIntent.url !== undefined && urlDataIntent.url !== "") {
 				AjaxWorker.fetch<T>({
-					id: method !== "get" ? undefined : "getviewintentfetch",
+					sync: true,
+					id: uniq().toString(),
 					url: urlDataIntent.url,
 					body: method !== "get" && method !== "delete" ? data : undefined,
 					method,
@@ -71,7 +74,7 @@ export namespace DataFetch {
 							}
 							// contain state
 							if ((response.data! as IViewIntentResponse).states !== undefined && (response.data! as IViewIntentResponse).states !== null) {
-								StateRoot.applyStatesRoots((response.data! as IViewIntentResponse).states!);
+								RootStore.applyStatesRoots((response.data! as IViewIntentResponse).states!);
 							}
 						} else {
 							resolve(response);

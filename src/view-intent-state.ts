@@ -1,5 +1,6 @@
 import lodash from "lodash";
-import { action, computed, extendShallowObservable, observable, toJS } from "mobx";
+// import { action, computed, extendShallowObservable, observable, toJS } from "mobx";
+import { action, computed, extendShallowObservable, observable, toJS} from "view-intent-mobx";
 // import { observer } from "mobx-react";
 import { process } from "uniqid";
 import { IIntent } from "./types";
