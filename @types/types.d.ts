@@ -1,3 +1,6 @@
+export interface IConfig {
+    element: string | HTMLElement;
+}
 export interface IViewIntentResponse {
     intent?: IIntent;
     states?: IRootStore[];
@@ -14,9 +17,10 @@ export interface IUrlDataIntent {
 }
 export interface IIntent {
     areaName: string;
-    redirect?: string | null;
-    viewType: string;
     instanceId?: "new" | "last" | string | null | undefined;
+    redirect?: string | null;
+    replaceState?: boolean;
+    viewType: string;
     viewState?: any | null;
     title?: string | null;
 }
@@ -29,7 +33,7 @@ export interface INavState {
     viewState?: any | null;
 }
 export interface IViewInfo {
-    area: string;
+    area?: string;
     name: string;
     type: any;
     frameId?: string | "root";

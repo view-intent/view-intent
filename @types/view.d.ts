@@ -5,15 +5,20 @@ import { ViewState } from "./view-intent-state";
 export declare abstract class View<TProps extends View.IProps, TState extends View.IState> extends React.Component<TProps, TState> implements View.IView<TProps, TState> {
     abstract viewInfo: IViewInfo;
     abstract state: TState;
-    readonly viewClassName: string;
     viewState: ViewState | null;
+    loadingClassName: string;
+    private _isMounted;
+    readonly viewClassName: string;
+    readonly isMounted: boolean;
     private mobxInstances;
     private mobxUnregiters;
     constructor(props: TProps);
+    classNames(classNamesList: string[], loader?: boolean): string;
     ref<T extends React.Component | {
         [key: string]: any;
     }>(refName: string): T;
     bindStore(instance: any): void;
+    componentDidMount(): void;
     componentWillMount(): void;
     updateViewState(): void;
     componentWillReceiveProps(newProp: TProps): void;

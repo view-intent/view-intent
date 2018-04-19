@@ -1,10 +1,11 @@
-import { IIntent, IViewInfo } from "./types";
+import { IIntent, IViewInfo, IConfig } from "./types";
 import { DataFetch } from "./data-fetch";
 export { View } from "./view";
 export { ViewFrame } from "./view-frame";
 export * from "./data-fetch";
 export * from "./types";
 export declare namespace ViewIntent {
+    function config(config: IConfig): void;
     const get: typeof DataFetch.get;
     const post: typeof DataFetch.post;
     const put: typeof DataFetch.put;

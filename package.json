@@ -6,7 +6,7 @@
 	"main": "lib/main",
 	"types": "@types/main",
 	"scripts": {
-		"link": "tonolucro-delivery-state view-intent view-intent-ui view-intent-mobx utility-collection",
+		"link": "yarn link ajax-worker utility-collection",
 		"test": "jest --no-cache",
 		"dev": "npm-run-all --parallel tsc-w && exit 0",
 		"tsc-w": "tsc -w",
@@ -105,7 +105,10 @@
 		"deep-equal": "^1.0.1",
 		"localforage": "^1.6.0",
 		"raw-loader": "^0.5.1",
+		"react": "^16.3.1",
 		"react-addons-css-transition-group": "^15.6.2",
+		"react-dom": "^16.3.1",
+		"react-hot-loader": "^4.0.1",
 		"uniqid": "^4.1.1",
 		"utility-collection": "^2.1.1",
 		"view-intent-mobx": "^0.2.0"
