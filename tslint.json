@@ -25,6 +25,8 @@
     "ordered-imports": false,
     "no-var-requires": false,
     "comment-format": false,
+    "no-trailing-whitespace": false,
+    "no-empty": false,
     "variable-name": [
       true,
       "ban-keywords",
