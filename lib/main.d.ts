@@ -4,7 +4,6 @@ import { DataFetch } from "./data-fetch";
 import * as React from "react";
 import * as ReactDOM from "react-dom";
 import { IConfigOptions } from "./config";
-export { IPersistent, Persistent } from "./persistent";
 export { React, ReactDOM };
 export { View };
 export { ViewFrame } from "./view-frame";

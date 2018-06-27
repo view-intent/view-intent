@@ -1,7 +1,4 @@
-export interface IPersistent<T> {
-    persistInput(data: T): Promise<void>;
-    persistOutput(): T;
-}
+import { IPersistent } from "view-intent-store";
 export declare namespace Persistent {
     function init(stateRootName: string, persistentInstance: IPersistent<any>): void;
 }

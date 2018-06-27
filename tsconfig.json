@@ -10,7 +10,7 @@
     "sourceMap": true,
     "isolatedModules": false,
     "noImplicitAny": true,
-    "module": "commonjs",
+    "module": "es6",
     "target": "es5",
     "moduleResolution": "node",
     "skipLibCheck": true,

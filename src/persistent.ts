@@ -1,6 +1,7 @@
 import * as localforage from "localforage";
 import { Is } from "utility-collection";
 import { Observable } from "abstract-observable";
+import { IPersistent } from "view-intent-store";
 // export interface IPersistent<T> {
 //   persistInput(data: T): Promise<void>;
 //   persistOutput(): T;
