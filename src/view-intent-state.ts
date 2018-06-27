@@ -47,9 +47,6 @@ export class ViewState extends Observable {
       this.frameId = this.viewTypeInfo.frameId;
     }
   }
-  public notify(): Promise<void> {
-    return this.notify();
-  }
   // @action public show(processRequires: boolean) {
   public show(processRequires: boolean) {
     if (!this.visible) {

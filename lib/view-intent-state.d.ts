@@ -15,7 +15,6 @@ export declare class ViewState extends Observable {
     store: ViewIntentState;
     private stateInstance;
     constructor(intent: IIntent, root: ViewIntentState);
-    notify(): Promise<void>;
     show(processRequires: boolean): void;
     hide(): void;
     getViewInstanceAddress(): string;
