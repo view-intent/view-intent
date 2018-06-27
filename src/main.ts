@@ -1,6 +1,2 @@
-import { Config, IConfigOptions } from "./config/config";
-export { Config, IConfigOptions };
-export * from "./ui/main";
-export * from "./view-intent/main";
-
-// import "utility-collection";
+export * from "./view/main";
+export * from "./store/main";

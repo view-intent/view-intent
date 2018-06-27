@@ -1,13 +1,17 @@
 {
+  "parcelTsPluginOptions": {
+    // If true type-checking is disabled
+    "transpileOnly": false
+  },
   "compilerOptions": {
-    "outDir": "./lib/",
+    "outDir": "./lib",
     "declaration": true,
-    "declarationDir": "./@types",
+    "declarationDir": "./lib",
     "sourceMap": true,
     "isolatedModules": false,
     "noImplicitAny": true,
-    "module": "none",
-    "target": "es2015",
+    "module": "commonjs",
+    "target": "es5",
     "moduleResolution": "node",
     "skipLibCheck": true,
     "jsx": "react",
