@@ -1,7 +1,7 @@
 {
   "private": false,
   "name": "view-intent",
-  "version": "1.2.24",
+  "version": "1.2.25",
   "description": "",
   "main": "lib/main",
   "types": "lib/main",
