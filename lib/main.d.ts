@@ -4,6 +4,7 @@ import { DataFetch } from "./data-fetch";
 import * as React from "react";
 import * as ReactDOM from "react-dom";
 import { IConfigOptions } from "./config";
+import { intentView as intentViewImport } from "./intent-view";
 export { React, ReactDOM };
 export { View };
 export { ViewFrame } from "./view-frame";
@@ -16,8 +17,7 @@ export declare namespace ViewIntent {
     const put: typeof DataFetch.put;
     const patch: typeof DataFetch.patch;
     const del: typeof DataFetch.del;
-    function intentView(intent: IIntent, viewState?: any, callback?: ((data: any) => void) | null): void;
-    function intentView(url: string, viewState?: any, callback?: ((data: any) => void) | null): void;
+    const intentView: typeof intentViewImport;
     function back(): void;
     function registerViewType(viewInfo: IViewInfo): void;
     function registerRootStore<T>(stateName: string, stateRootInstance: T): T;

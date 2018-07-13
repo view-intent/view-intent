@@ -10,8 +10,8 @@ export declare class ViewFrame extends React.Component<ViewFrame.IProps, ViewFra
     componentWillMount(): void;
     componentDidMount(): void;
     componentWillUnmount(): void;
-    renderViewList(): Array<JSX.Element | undefined>;
-    render(): JSX.Element;
+    renderViewList(): React.ReactNode | JSX.Element | null;
+    render(): React.ReactNode;
 }
 export declare namespace ViewFrame {
     let rootDefined: boolean;

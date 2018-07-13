@@ -30,9 +30,9 @@ export namespace RootStore {
   export function applyRootStore(stateRoot: IRootStore) {
     const stateName = stateRoot.stateName!.toLowerCase();
     const actionName = stateRoot.actionName;
-    const stateRootAction = getRootStoreAction(stateName, actionName!);
-    if (stateRootAction !== null) {
-      stateRootAction.apply(this.getRootStore(stateName), stateRoot.args);
+    const storeRootAction = getRootStoreAction(stateName, actionName!);
+    if (storeRootAction !== null) {
+      storeRootAction.apply(this.getRootStore(stateName), stateRoot.args);
     }
   }
   export function applyStatesRoots(statesRoots: IRootStore[]) {

@@ -29,8 +29,8 @@ export class ViewFrame extends React.Component<ViewFrame.IProps, ViewFrame.IStat
   }
   public notify(): void {
     this.forceUpdate();
+    // TODO: implements shouldComponentUpdate()
   }
-  // TODO: implements shouldComponentUpdate()
   public componentWillMount() {
     this.unobserve = ViewIntentState.Instance.subscribe(this);
   }
@@ -41,8 +41,8 @@ export class ViewFrame extends React.Component<ViewFrame.IProps, ViewFrame.IStat
     this.unobserve!();
     this.mounted = false;
   }
-  public renderViewList(): Array<JSX.Element | undefined> {
-    const stateId = this.state.id! as string;
+  public renderViewList(): React.ReactNode | JSX.Element | null {
+    const stateId = this.state.id as string;
     const r = ViewIntentState.Instance.getViewStateListByFrameId(stateId)
       .map((viewState: ViewState, index: number) => {
         let ViewRenderComponent: typeof View;
@@ -57,7 +57,7 @@ export class ViewFrame extends React.Component<ViewFrame.IProps, ViewFrame.IStat
       return [];
     }
   }
-  public render(): JSX.Element {
+  public render(): React.ReactNode {
     return <div
       key={this.props.id}
       id={this.props.id}

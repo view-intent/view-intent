@@ -13,6 +13,7 @@ import { ViewIntentDom } from "./view-intent-dom";
 import * as React from "react";
 import * as ReactDOM from "react-dom";
 import { Config, IConfigOptions } from "./config";
+import { intentView as intentViewImport } from "./intent-view";
 // export
 // export {  Persistent } from "./persistent";
 export { React, ReactDOM };
@@ -38,20 +39,19 @@ export namespace ViewIntent {
   export const del = DataFetch.del;
   // areaName.ClassName:{id|"new"|"last"}
   // #region intentView
-  // export function intentView(intent: IIntent): void;
-  // export function intentView(url: string): void;
-  export function intentView(intent: IIntent, viewState?: any, callback?: ((data: any) => void) | null): void;
-  export function intentView(url: string, viewState?: any, callback?: ((data: any) => void) | null): void;
-  export function intentView(intentOrUrl: IIntent | string, viewState: any = null, callback: ((data: any) => void) | null = null): void {
-    const intent: IIntent = Helper.pathToIntent(intentOrUrl, viewState);
-    const url: string | null = Helper.removeSharp(intentOrUrl);
-    if (!Is.empty(url)) {
-      DataFetch.get(url!, undefined);
-    }
-    if (intent != null) {
-      Nav.intentView(intent, url!, callback);
-    }
-  }
+  export const intentView = intentViewImport;
+  // export function intentView(intent: IIntent, viewState?: any, callback?: ((data: any) => void) | null): void;
+  // export function intentView(url: string, viewState?: any, callback?: ((data: any) => void) | null): void;
+  // export function intentView(intentOrUrl: IIntent | string, viewState: any = null, callback: ((data: any) => void) | null = null): void {
+  //   const intent: IIntent = Helper.pathToIntent(intentOrUrl, viewState);
+  //   const url: string | null = Helper.removeSharp(intentOrUrl);
+  //   if (!Is.empty(url)) {
+  //     DataFetch.get(url!, undefined);
+  //   }
+  //   if (intent != null) {
+  //     Nav.intentView(intent, url!, callback);
+  //   }
+  // }
   // #endregion
   export function back() {
     window.history.back();

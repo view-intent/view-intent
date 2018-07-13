@@ -3,10 +3,11 @@ import * as lodash from "lodash";
 import { process, time } from "uniqid";
 import { Is, Url } from "utility-collection";
 import { IIntent, INavState, IUrlDataIntent } from "./types";
-import { ViewIntentState, ViewState } from "./view-intent-state";
+import { ViewIntentState, ViewState, WindowHistoryHelper } from "./view-intent-state";
 import { Helper } from "./helper";
 import { setTimeout } from "timers";
-import { WindowHistoryHelper } from "./window-history-helper";
+// import { WindowHistoryHelper } from "./window-history-helper";
+// console.log("windowH", WindowHistoryHelper);
 
 export namespace Nav {
   const self = Nav;

@@ -67,7 +67,7 @@
   dependencies:
     "@types/react" "*"
 
-"@types/react-dom@^16.0.3":
+"@types/react-dom@^16.0.3", "@types/react-dom@^16.0.6":
   version "16.0.6"
   resolved "https://registry.yarnpkg.com/@types/react-dom/-/react-dom-16.0.6.tgz#f1a65a4e7be8ed5d123f8b3b9eacc913e35a1a3c"
   dependencies:
@@ -77,6 +77,12 @@
 "@types/react@*", "@types/react@^16.0.35", "@types/react@^16.3.13":
   version "16.4.2"
   resolved "https://registry.yarnpkg.com/@types/react/-/react-16.4.2.tgz#f1a9cf1ee85221530def2ac26aee20f910a9dac8"
+  dependencies:
+    csstype "^2.2.0"
+
+"@types/react@^16.4.4":
+  version "16.4.4"
+  resolved "https://registry.yarnpkg.com/@types/react/-/react-16.4.4.tgz#ffaa339e41346a7c65ddc914779ae43fa522a39a"
   dependencies:
     csstype "^2.2.0"
 
@@ -96,9 +102,11 @@ abbrev@1:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/abbrev/-/abbrev-1.1.1.tgz#f8f2c887ad10bf67f634f005b6987fed3179aac8"
 
-abstract-observable@^0.1.2:
-  version "0.1.4"
-  resolved "https://registry.yarnpkg.com/abstract-observable/-/abstract-observable-0.1.4.tgz#b3f732aa72690020c1210ac6e556ba60c7877142"
+abstract-observable@^0.1.10:
+  version "0.1.10"
+  resolved "https://registry.yarnpkg.com/abstract-observable/-/abstract-observable-0.1.10.tgz#b7219a9526ed12267e1ebf72d76ee598c4950816"
+  dependencies:
+    setimmediate "^1.0.5"
 
 abstract-observable@^0.1.4:
   version "0.1.6"
@@ -2979,6 +2987,15 @@ react-addons-css-transition-group@^15.6.2:
   dependencies:
     react-transition-group "^1.2.0"
 
+react-dom@^16.4.1:
+  version "16.4.1"
+  resolved "https://registry.yarnpkg.com/react-dom/-/react-dom-16.4.1.tgz#7f8b0223b3a5fbe205116c56deb85de32685dad6"
+  dependencies:
+    fbjs "^0.8.16"
+    loose-envify "^1.1.0"
+    object-assign "^4.1.1"
+    prop-types "^15.6.0"
+
 react-transition-group@^1.2.0:
   version "1.2.1"
   resolved "https://registry.yarnpkg.com/react-transition-group/-/react-transition-group-1.2.1.tgz#e11f72b257f921b213229a774df46612346c7ca6"
@@ -2989,7 +3006,7 @@ react-transition-group@^1.2.0:
     prop-types "^15.5.6"
     warning "^3.0.0"
 
-react@^16.2.0:
+react@^16.2.0, react@^16.4.1:
   version "16.4.1"
   resolved "https://registry.yarnpkg.com/react/-/react-16.4.1.tgz#de51ba5764b5dbcd1f9079037b862bd26b82fe32"
   dependencies:
@@ -3738,6 +3755,10 @@ utility-collection@^1.8.26:
     "@types/react-dom" "^16.0.3"
     "@types/window-or-global" "^1.0.0"
 
+utility-collection@^2.2.10:
+  version "2.2.10"
+  resolved "https://registry.yarnpkg.com/utility-collection/-/utility-collection-2.2.10.tgz#55e5c03f4f080c09808a4326bff25deb3d50c788"
+
 utility-collection@^2.2.3:
   version "2.2.4"
   resolved "https://registry.yarnpkg.com/utility-collection/-/utility-collection-2.2.4.tgz#6bfe59e8a382a0ff10c49dd17cf8e9f122d7773b"
@@ -3761,7 +3782,7 @@ utility-collection@^2.2.3:
     uniqid "^4.1.1"
     utility-collection "^1.8.26"
 
-utility-collection@^2.2.4, utility-collection@^2.2.5:
+utility-collection@^2.2.4:
   version "2.2.5"
   resolved "https://registry.yarnpkg.com/utility-collection/-/utility-collection-2.2.5.tgz#8479fa36699e6c84aad693e3b53b6f895a3ccc47"
   dependencies:

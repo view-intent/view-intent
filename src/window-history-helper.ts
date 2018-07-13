@@ -1,7 +1,7 @@
 import { INavState, IIntent } from "./types";
 import { Url } from "utility-collection";
 
-export namespace WindowHistoryHelper {
+export namespace WindowHistoryHelper2 {
   export function getCurrentState(): INavState | null {
     const currentNavState: INavState = window.history.state;
     if (currentNavState && currentNavState.areaName && currentNavState.viewType && currentNavState.instanceId) {

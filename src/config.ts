@@ -1,10 +1,15 @@
+import { DefaultLoader } from "./default-loader";
+
 export interface IConfigOptions {
   element?: string | HTMLElement;
-  loaderSrc?: string;
+  loader?: React.ReactNode;
+  // loaderSrc?: string;
   apiOrigin?: string;
 }
 export namespace Config {
-  export let options: IConfigOptions = {};
+  export let options: IConfigOptions = {
+    loader: DefaultLoader,
+  };
   export let initialized: boolean = false;
   export function set(configOptions: IConfigOptions): void {
     if (initialized) {
@@ -14,7 +19,6 @@ export namespace Config {
     if (configOptions !== undefined && configOptions !== null) {
       // ViewIntent.config(configOptions);
       Config.options = Object.assign(Config.options, configOptions);
-      console.log(Config.options);
     }
   }
 }

@@ -1,6 +1,7 @@
+/// <reference types="@types/react" />
 export interface IConfigOptions {
     element?: string | HTMLElement;
-    loaderSrc?: string;
+    loader?: React.ReactNode;
     apiOrigin?: string;
 }
 export declare namespace Config {

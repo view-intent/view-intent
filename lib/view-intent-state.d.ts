@@ -1,6 +1,11 @@
 import { IIntent, INavState } from "./types";
 import { ViewTypeStore } from "./view-type-store";
 import { Observable } from "abstract-observable";
+export declare namespace WindowHistoryHelper {
+    function getCurrentState(): INavState | null;
+    function setCurrentStateViewAddresses(viewAddress: string[]): void;
+    function NavStateToIntent(state: INavState | null): IIntent | null;
+}
 export declare class ViewState extends Observable {
     root: ViewIntentState;
     areaName: string;

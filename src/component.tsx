@@ -1,6 +1,8 @@
 import * as React from "react";
 import { IObserver, Observable } from "abstract-observable";
 import { Dom } from "utility-collection";
+import { IIntent } from "./types";
+import { intentView as intentViewImport } from "./intent-view";
 
 export abstract class Component<IProps, IState> extends React.Component<IProps, IState> implements IObserver {
   // @observable public LoadingClassName: string = "preload";
@@ -22,6 +24,13 @@ export abstract class Component<IProps, IState> extends React.Component<IProps, 
   }
   public notify(): void {
     this.forceUpdate();
+  }
+  public intentView(intent: IIntent, viewState?: any, callback?: ((data: any) => void) | null): (event: any) => void;
+  public intentView(url: string, viewState?: any, callback?: ((data: any) => void) | null): (event: any) => void;
+  public intentView(intentOrUrl: IIntent | string, viewState: any = null, callback: ((data: any) => void) | null = null): (event: any) => void {
+    return (event: any) => {
+      intentViewImport(intentOrUrl as any, viewState as any, callback as any);
+    };
   }
   public joinClass(classNames: Array<string | undefined | null> | string, loader: boolean = false): string {
     if (typeof classNames === "string") {
