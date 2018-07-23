@@ -8,3 +8,8 @@ tslint.json
 tsconfig.json
 bin
 obj
+.eslintrc.json
+.gitignore
+tslint.json
+src
+node_modules
