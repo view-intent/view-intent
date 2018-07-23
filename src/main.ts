@@ -85,7 +85,7 @@ export namespace ViewIntent {
     ViewIntentDom.init();
     window.addEventListener("popstate", (e) => {
       Nav.intentViewPop(e.state);
-      // DataFetch.get(window.location.href); // best without
+      // DataFetch.get(window.location.href); // ! best without, but need to have because navigation broke when didn't load the view
     });
   }
   export function registerRootStore<T>(stateName: string, stateRootInstance: T): T {

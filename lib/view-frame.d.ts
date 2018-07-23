@@ -1,6 +1,6 @@
-/// <reference types="@types/react" />
 import * as React from "react";
 import { IObserver } from "abstract-observable";
+import { CSSProperties } from "react";
 export declare class ViewFrame extends React.Component<ViewFrame.IProps, ViewFrame.IState> implements IObserver {
     state: ViewFrame.IState;
     private mounted;
@@ -19,6 +19,7 @@ export declare namespace ViewFrame {
         root?: boolean;
         id: string;
         className?: string;
+        style?: CSSProperties;
     }
     interface IState {
         isRoot?: boolean;

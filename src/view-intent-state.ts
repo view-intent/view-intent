@@ -5,7 +5,6 @@ import { View } from "./view";
 import { ViewTypeStore } from "./view-type-store";
 import { Helper } from "./helper";
 import { Is, Url, List } from "utility-collection";
-import mobx from "mobx";
 // import { WindowHistoryHelper } from "./window-history-helper";
 import { Observable } from "abstract-observable";
 
@@ -40,8 +39,8 @@ export namespace WindowHistoryHelper {
       const intent: IIntent = {
         areaName: state.areaName,
         instanceId: state.instanceId,
-        viewType: state.viewType,
         viewState: state.viewState,
+        viewType: state.viewType,
       };
       return intent;
     }
@@ -98,7 +97,7 @@ export class ViewState extends Observable {
           requireViewState && requireViewState.show(true);
         }
       });
-      this.root.notify();
+      // this.root.notify();
     }
     this.notify();
   }
@@ -251,7 +250,7 @@ export class ViewIntentState extends Observable {
   public processPopIntent(navState: INavState) {
     if (navState.visibleViewStates !== null) {
       this.showViewStatesByAddresses(navState.visibleViewStates);
-    }
+    } 
     this.notify();
   }
   public processIntent(intent: IIntent, url: string | null = null): void {

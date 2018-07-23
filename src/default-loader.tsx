@@ -1,7 +1,7 @@
 import * as React from "react";
 import { Component } from "./component";
 
-export class DefaultLoader extends Component<DefaultLoader.IProps, DefaultLoader.IState> {
+export class DefaultLoader2 extends Component<DefaultLoader.IProps, DefaultLoader.IState> {
   public state: DefaultLoader.IState = {
   };
   constructor(props: DefaultLoader.IProps) {

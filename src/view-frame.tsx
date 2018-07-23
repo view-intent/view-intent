@@ -4,6 +4,8 @@ import { ViewIntentState, ViewState } from "./view-intent-state";
 import { ViewTypeStore } from "./view-type-store";
 // import { IObserver } from "observable";
 import { IObserver } from "abstract-observable";
+import { CSSProperties } from "react";
+import { Nav } from "./nav";
 
 export class ViewFrame extends React.Component<ViewFrame.IProps, ViewFrame.IState> implements IObserver {
   public state: ViewFrame.IState = {
@@ -17,7 +19,7 @@ export class ViewFrame extends React.Component<ViewFrame.IProps, ViewFrame.IStat
     if (this.state.isRoot === true) {
       this.state.id = "root";
       ViewFrame.rootDefined = true;
-    } else if (this.state.id === undefined || this.state.id === undefined) {
+    } else if (this.state.id === undefined || this.state.id === null) {
       throw new Error("View Frame must have an id.");
     } else if (this.state.id.toLowerCase() === "root") {
       this.state.isRoot = true;
@@ -61,6 +63,7 @@ export class ViewFrame extends React.Component<ViewFrame.IProps, ViewFrame.IStat
     return <div
       key={this.props.id}
       id={this.props.id}
+      style={this.props.style}
       className={(this.props.className !== undefined && this.props.className !== null) ? "view-intent-frame " + this.props.className : "view-intent-frame"}>
       {this.renderViewList()}
     </div>;
@@ -72,6 +75,7 @@ export namespace ViewFrame {
     root?: boolean;
     id: string;
     className?: string;
+    style?: CSSProperties;
   }
   export interface IState {
     isRoot?: boolean;

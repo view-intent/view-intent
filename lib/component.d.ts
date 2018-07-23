@@ -1,4 +1,3 @@
-/// <reference types="@types/react" />
 import * as React from "react";
 import { IObserver, Observable } from "abstract-observable";
 import { IIntent } from "./types";

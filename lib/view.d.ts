@@ -1,4 +1,3 @@
-/// <reference types="@types/react" />
 import * as React from "react";
 import { IIntent, IViewInfo } from "./types";
 import { ViewState } from "./view-intent-state";

@@ -59,7 +59,7 @@ export namespace DataFetch {
         // console.log("generic fetch -", urlDataIntent);
         AjaxWorker.fetch<T>({
           sync: true,
-          id: uniq().toString(),
+          id: method === "get" ? "get" : uniq().toString(),
           url: processUrl(urlDataIntent.url),
           body: method !== "get" && method !== "delete" ? data : undefined,
           method,

@@ -59,7 +59,8 @@ export namespace Nav {
       intentView(intent, url);
     }
     // window.addEventListener("popstate", (e) => {
-    // 	intentViewPop(e.state);
+    //   intentView( Helper.navStateToIntent(e.state), e.state.url);
+    //   // intentViewPop(e.state);
     // });
     // window.onpopstate = (e: PopStateEvent) => {
     // 	intentViewPop(e.state);
@@ -72,7 +73,7 @@ export namespace Nav {
       return;
     }
     if (intent.viewType === "" || intent.viewType === undefined || intent.viewType === null ||
-      intent.areaName === "" || intent.areaName === undefined || intent.areaName === null) {
+    intent.areaName === "" || intent.areaName === undefined || intent.areaName === null) {
       return;
     }
     // generate or getInstance
@@ -104,24 +105,26 @@ export namespace Nav {
     const navState: INavState = {
       areaName: intent.areaName,
       instanceId,
-      viewType: intent.viewType,
       title: intent.title,
       url: (Is.nullOrUndefined(intent.redirect) ? url : intent.redirect),
       viewState: intent.viewState,
+      viewType: intent.viewType,
       visibleViewStates: null,
     };
     // should replace ----------------------------
     let shouldReplace: boolean = (window.history.state === undefined || window.history.state === null || intent.replaceState === true);
     let shouldNavigate: boolean = true;
     const currentNavState: INavState | null = WindowHistoryHelper.getCurrentState(); // window.history.state;
+
     if (!shouldReplace && currentNavState) {
       if (navState.url === null || navState.url === undefined || navState.url === "") {
-        // shouldNavigate = false;
-      }
-      if (currentNavState.viewType === navState.viewType && currentNavState.areaName === navState.areaName && currentNavState.viewState === navState.viewState && navState.url === currentNavState.url) {
         shouldNavigate = false;
       }
-      if (currentNavState.url === navState.url && currentNavState.viewType === intent.viewType) {
+      if (currentNavState.viewType === navState.viewType && currentNavState.areaName === navState.areaName && currentNavState.viewState === navState.viewState && navState.url === currentNavState.url) {
+        // shouldNavigate = false;
+        shouldReplace = true;
+      }
+      if (currentNavState.areaName === navState.areaName && currentNavState.viewType === intent.viewType) {
         shouldReplace = true;
       }
       if (navState.url === window.location.href) {
@@ -132,12 +135,9 @@ export namespace Nav {
           shouldReplace = true;
         }
       }
-      if (currentNavState.areaName !== navState.areaName || currentNavState.viewType !== navState.viewType) {
-        shouldReplace = false;
-      }
     }
     // push or replace ---------------------------
-    if (shouldNavigate) {
+    if (shouldNavigate || true) {
       let pushUrl: string = (!Is.nullOrUndefined(navState.url) ? navState.url as string : "./");
       const pushTitle: string = (!Is.nullOrUndefined(navState.title) ? navState.title as string : document.getElementsByTagName("title")[0].innerText);
       const newPushUrl = new Url(pushUrl);
@@ -156,6 +156,7 @@ export namespace Nav {
     const intent = WindowHistoryHelper.NavStateToIntent(state);
     if (intent !== null) {
       ViewIntentState.Instance.processPopIntent(state);
+      ViewIntentState.Instance.processIntent(intent);
     }
   }
 }

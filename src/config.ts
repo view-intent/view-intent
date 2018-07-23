@@ -1,4 +1,4 @@
-import { DefaultLoader } from "./default-loader";
+// import { DefaultLoader } from "./default-loader";
 
 export interface IConfigOptions {
   element?: string | HTMLElement;
@@ -8,7 +8,7 @@ export interface IConfigOptions {
 }
 export namespace Config {
   export let options: IConfigOptions = {
-    loader: DefaultLoader,
+    // loader: DefaultLoader,
   };
   export let initialized: boolean = false;
   export function set(configOptions: IConfigOptions): void {

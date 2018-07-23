@@ -1,4 +1,3 @@
-/// <reference types="@types/react" />
 export interface IConfigOptions {
     element?: string | HTMLElement;
     loader?: React.ReactNode;
