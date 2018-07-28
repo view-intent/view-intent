@@ -68,6 +68,6 @@
     "reflect-metadata": "^0.1.12",
     "uniqid": "^4.1.1",
     "utility-collection": "^2.2.10",
-    "view-intent-store": "^1.1.3"
+    "view-intent-store": "^1.2.1"
   }
 }
