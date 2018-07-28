@@ -14,6 +14,7 @@ import * as React from "react";
 import * as ReactDOM from "react-dom";
 import { Config, IConfigOptions } from "./config";
 import { intentView as intentViewImport } from "./intent-view";
+import * as Vis from "view-intent-store";
 // export
 // export {  Persistent } from "./persistent";
 export { React, ReactDOM };
@@ -31,6 +32,12 @@ export namespace ViewIntent {
     if (config.element !== undefined) {
       init(config.element);
     }
+    Vis.config({
+      fetchAction: (url: string) => {
+        this.get(url);
+      },
+      registrationAction: this.registerRootStore,
+    });
   }
   export const get = DataFetch.get;
   export const post = DataFetch.post;

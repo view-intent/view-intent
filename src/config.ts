@@ -1,3 +1,5 @@
+import * as Vis from "view-intent-store";
+
 // import { DefaultLoader } from "./default-loader";
 
 export interface IConfigOptions {
@@ -15,6 +17,7 @@ export namespace Config {
     if (initialized) {
       return;
     }
+    
     initialized = true;
     if (configOptions !== undefined && configOptions !== null) {
       // ViewIntent.config(configOptions);
