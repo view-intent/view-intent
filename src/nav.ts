@@ -83,6 +83,7 @@ export namespace Nav {
     if (viewState !== null) {
       intent.instanceId = instanceId = viewState.instanceId;
     }
+  
     // if (instanceId === null || instanceId === undefined || instanceId === "last") { 
     //   viewState = ViewIntentState.Instance.getLastViewStateByType(intent.areaName, intent.viewType);
     // } else if (instanceId !== "new") {
@@ -95,7 +96,7 @@ export namespace Nav {
     //   viewState = ViewIntentState.Instance.getViewStateById(intent);
     // }
     // console.log("viewState: ", viewState);
-    
+ 
     // viewType ------------
     let viewType: string = intent.viewType;
     if (viewType !== null && viewType !== undefined) {
@@ -111,6 +112,7 @@ export namespace Nav {
       viewType: intent.viewType,
       visibleViewStates: null,
     };
+
     // should replace ----------------------------
     let shouldReplace: boolean = (window.history.state === undefined || window.history.state === null || intent.replaceState === true);
     let shouldNavigate: boolean = true;

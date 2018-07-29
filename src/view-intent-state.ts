@@ -203,6 +203,10 @@ export class ViewIntentState extends Observable {
     if (returnView === null || returnView === undefined) {
       returnView = this.newViewInstance(intent, false);
     }
+    // inject new viewState
+    if (intent.viewState !== undefined && intent.viewState !== null) {
+      returnView.setState(intent.viewState);
+    }
     return returnView;
   }
   public getVisibleViewState(): ViewState[] {

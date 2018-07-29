@@ -7,6 +7,7 @@ import { Helper } from "./helper";
 import { IResponseOptions, IRequestOptions } from "ajax-worker/@types/interfaces";
 import { process as uniq } from "uniqid";
 import { Config } from "./config";
+// import { intentView } from "./intent-view";
 
 export namespace DataFetch {
   const isReactNative: boolean = false;
