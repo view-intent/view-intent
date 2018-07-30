@@ -3,10 +3,14 @@ import { IObserver, Observable } from "abstract-observable";
 import { IIntent } from "./types";
 export declare abstract class Component<IProps, IState> extends React.Component<IProps, IState> implements IObserver {
     loadingClassName: string;
+    readonly isLoading: boolean;
+    private _loading;
     private _loadingClassName;
     private _unregisterObservables;
     private _isMounted;
     constructor(props: IProps);
+    loading(): void;
+    loaded(): void;
     notify(): void;
     intentView(intent: IIntent, viewState?: any, callback?: ((data: any) => void) | null): (event: any) => void;
     intentView(url: string, viewState?: any, callback?: ((data: any) => void) | null): (event: any) => void;

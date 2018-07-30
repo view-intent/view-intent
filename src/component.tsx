@@ -15,12 +15,24 @@ export abstract class Component<IProps, IState> extends React.Component<IProps, 
   public get loadingClassName() {
     return this._loadingClassName;
   }
+  public get isLoading() {
+    return this._loading;
+  }
+  private _loading: boolean = false;
   private _loadingClassName: string = "preload";
   private _unregisterObservables: Array<() => void> = [];
   private _isMounted: boolean = false;
   constructor(props: IProps) {
     super(props);
-    this.observe.bind(this);
+    this.observe = this.observe.bind(this);
+  }
+  public loading(): void {
+    this._loading = true;
+    this.notify();
+  }
+  public loaded(): void {
+    this._loading = false;
+    this.notify();
   }
   public notify(): void {
     this.forceUpdate();
