@@ -64,6 +64,7 @@ export namespace DataFetch {
           url: processUrl(urlDataIntent.url),
           body: method !== "get" && method !== "delete" ? data : undefined,
           method,
+          redirect: "follow",
           headers: [
             ["Request", "State"],
             ["IsAjax", "true"],
@@ -79,7 +80,7 @@ export namespace DataFetch {
                 RootStore.applyStatesRoots((response.data! as IViewIntentResponse).states!);
               }
               // nav
-              if (!response.urlRedirected!.includes("p=")) {
+              if (!response.urlRedirected!.includes("p=") && !response.urlRedirected!.includes("popping=")) {
                 if (!viewIntentedPushed || response.redirected) {
                   Nav.intentView(data.intent!, response.urlRedirected!);
                 }

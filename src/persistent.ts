@@ -1,7 +1,7 @@
 import * as localforage from "localforage";
 import { Is } from "utility-collection";
 import { Observable } from "abstract-observable";
-import { IPersistent } from "view-intent-store";
+import { IPersistent, Store } from "view-intent-store";
 // export interface IPersistent<T> {
 //   persistInput(data: T): Promise<void>;
 //   persistOutput(): T;
@@ -28,8 +28,8 @@ export namespace Persistent {
   }
   export function init(stateRootName: string, persistentInstance: IPersistent<any>) {
     if (persistentInstance.persistOutput !== undefined && persistentInstance.persistInput !== undefined) {
-      if (persistentInstance instanceof Observable) {
-        persistentInstance.subscribe(() => {
+      if (typeof (persistentInstance as any).subscribe === "function") {
+        (persistentInstance as any).subscribe(() => {
           saveState(stateRootName, persistentInstance.persistOutput());
         });
       }

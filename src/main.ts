@@ -8,13 +8,14 @@ import { ViewNotFound } from "./view-error";
 import { RootStore } from "./state-root";
 import { ViewRoot } from "./view-root";
 import { DataFetch } from "./data-fetch";
-import { Is } from "utility-collection";
+import { Is, Url } from "utility-collection";
 import { ViewIntentDom } from "./view-intent-dom";
 import * as React from "react";
 import * as ReactDOM from "react-dom";
 import { Config, IConfigOptions } from "./config";
 import { intentView as intentViewImport } from "./intent-view";
-import * as Vis from "view-intent-store";
+import { config as configStore } from "view-intent-store";
+import { Store } from "view-intent-store";
 // export
 // export {  Persistent } from "./persistent";
 export { React, ReactDOM };
@@ -22,22 +23,36 @@ export { View };
 export { ViewFrame } from "./view-frame";
 export { IIntent, IViewInfo, IRootStore };
 export { Component } from "./component";
+export { IConfigOptions };
 // export { IIntent, IViewInfo, IRootStore, IConfig } from "./types";
 // export * from "./data-fetch";
 // import { Main } from "../main";
 
 export namespace ViewIntent {
   export function config(config: IConfigOptions) {
+
+    // console.log("--", Vis);
+    // Vis.config({
+    //   fetchAction: (url: string) => {
+    //     this.get(url);
+    //   },
+    //   registrationAction: this.registerRootStore,
+    // });
+
     Config.set(config);
     if (config.element !== undefined) {
       init(config.element);
     }
-    Vis.config({
-      fetchAction: (url: string) => {
-        this.get(url);
-      },
-      registrationAction: this.registerRootStore,
-    });
+    if (config.notFound === undefined) {
+      ViewIntent.registerViewType(ViewNotFound.viewInfo);
+    } else {
+      ViewNotFound.viewInfo.type = config.notFound.type;
+      // ViewNotFound.viewInfo.area = config.notFound.area;
+      ViewNotFound.viewInfo.frameId = config.notFound.frameId;
+      ViewNotFound.viewInfo.require = config.notFound.require;
+      ViewIntent.registerViewType(ViewNotFound.viewInfo);
+    }
+
   }
   export const get = DataFetch.get;
   export const post = DataFetch.post;
@@ -84,6 +99,17 @@ export namespace ViewIntent {
     }
     ViewTypeStore.registerViewType(viewInfo);
   }
+  const justLoaded: boolean = true;
+  let timeOut: NodeJS.Timer | undefined;
+  function refreshCurrentDataStores() {
+    if (timeOut !== undefined ) { clearTimeout(timeOut); }
+    timeOut = setTimeout(() => {
+      const url = new Url(window.location.href);
+      url.setQuery("popping", "true");
+      DataFetch.get(url.toString());
+    }, 200);
+  }
+
   function init(element: string | HTMLElement): void;
   function init(element: string | HTMLElement, intent: IIntent | null = null, hotLoader: boolean = true): void {
     ViewRoot.htmlInit(intent!, element, hotLoader);
@@ -92,7 +118,9 @@ export namespace ViewIntent {
     ViewIntentDom.init();
     window.addEventListener("popstate", (e) => {
       Nav.intentViewPop(e.state);
-      // DataFetch.get(window.location.href); // ! best without, but need to have because navigation broke when didn't load the view
+      refreshCurrentDataStores(); // ! testing this aproach, don't appear to work
+      // DataFetch.get(window.location.href);
+      // DataFetch.get(window.location.href); // ! best without, come back later
     });
   }
   export function registerRootStore<T>(stateName: string, stateRootInstance: T): T {
@@ -108,10 +136,8 @@ export namespace ViewIntent {
     }
   }
 }
-ViewIntent.registerViewType(ViewNotFound.viewInfo);
-// requestAnimationFrame(() => {
-//   if (Config.options.element !== null && Config.options.element !== undefined) {
-//     ViewIntent.config(Config.options);
-//   }
-// });
+configStore({
+  fetchAction: (url: string) => { ViewIntent.get(url); },
+  registrationAction: ViewIntent.registerRootStore,
+});
 export default ViewIntent;

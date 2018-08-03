@@ -5,11 +5,16 @@ import { Persistent } from "./persistent";
 export namespace RootStore {
   export const stateRootStore: { [stateName: string]: any } = {};
   export function registerRootStore<T>(stateRootName: string, stateRootInstance: T): T {
-    stateRootStore[stateRootName.toLowerCase()] = stateRootInstance as T;
-    if ("persistInput" in stateRootInstance && "persistOutput" in stateRootInstance) {
-      Persistent.init(stateRootName, stateRootStore[stateRootName.toLowerCase()]);
+    const instance = getRootStore(stateRootName) as T;
+    if (instance !== undefined && instance !== null) {
+      return instance;
+    } else {
+      stateRootStore[stateRootName.toLowerCase()] = stateRootInstance as T;
+      if ("persistInput" in stateRootInstance && "persistOutput" in stateRootInstance) {
+        Persistent.init(stateRootName, stateRootStore[stateRootName.toLowerCase()]);
+      }
+      return stateRootStore[stateRootName.toLowerCase()] as T;
     }
-    return stateRootStore[stateRootName.toLowerCase()] as T;
   }
   export function getRootStore<T>(stateRootName: string) {
     return stateRootStore[stateRootName.toLowerCase()] as T;

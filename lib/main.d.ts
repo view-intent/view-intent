@@ -10,6 +10,7 @@ export { View };
 export { ViewFrame } from "./view-frame";
 export { IIntent, IViewInfo, IRootStore };
 export { Component } from "./component";
+export { IConfigOptions };
 export declare namespace ViewIntent {
     function config(config: IConfigOptions): void;
     const get: typeof DataFetch.get;

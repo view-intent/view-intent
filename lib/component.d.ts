@@ -8,7 +8,9 @@ export declare abstract class Component<IProps, IState> extends React.Component<
     private _loadingClassName;
     private _unregisterObservables;
     private _isMounted;
+    private _observable;
     constructor(props: IProps);
+    subscribe(observer: (() => void) | IObserver): () => void;
     loading(): void;
     loaded(): void;
     notify(): void;
@@ -20,5 +22,6 @@ export declare abstract class Component<IProps, IState> extends React.Component<
     componentDidMount(): void;
     componentWillUnmount(): void;
     abstract render(): React.ReactNode;
+    private notifyAllObservers;
 }
 export default Component;

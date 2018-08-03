@@ -28,9 +28,12 @@ export abstract class View<TProps extends View.IProps, TState extends View.IStat
     }
   }
   public componentDidMount() {
-    // super.componentWillMount(); // TODO: must review this
+    super.componentDidMount();
     // update state before mount
     this.updateViewState();
+  }
+  public componentWillUnmount() {
+    super.componentWillUnmount();
   }
   public componentWillReceiveProps(newProp: TProps) {
     this.updateViewState();

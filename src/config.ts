@@ -1,4 +1,5 @@
-import * as Vis from "view-intent-store";
+// import * as Vis from "view-intent-store";
+import { IViewInfo } from "./types";
 
 // import { DefaultLoader } from "./default-loader";
 
@@ -7,6 +8,7 @@ export interface IConfigOptions {
   loader?: React.ReactNode;
   // loaderSrc?: string;
   apiOrigin?: string;
+  notFound?: IViewInfo;
 }
 export namespace Config {
   export let options: IConfigOptions = {

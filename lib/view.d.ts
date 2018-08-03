@@ -13,6 +13,7 @@ export declare abstract class View<TProps extends View.IProps, TState extends Vi
     }>(refName: string): T;
     updateViewState(): void;
     componentDidMount(): void;
+    componentWillUnmount(): void;
     componentWillReceiveProps(newProp: TProps): void;
     abstract render(): React.ReactNode | JSX.Element | JSX.Element[];
 }
